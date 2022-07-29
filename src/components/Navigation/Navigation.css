@@ -1,0 +1,12 @@
+.navigation {
+    height: 100%;
+    padding: 10px 40px;
+    outline: 2px solid yellow;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+}
