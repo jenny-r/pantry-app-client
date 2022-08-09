@@ -1,42 +1,28 @@
 import React, { useState } from 'react';
 import './Tabs.css';
 
-export function Tabs () {
+export function Tabs({ tabNames, onTabSelect }: { tabNames: Array<string>, onTabSelect: Function }) {
 
-    const [toggleState, setToggleState] = useState(1);
+    const [toggleState, setToggleState] = useState(0);
 
-    const toggleTab = (index:number) => {
+    const toggleTab = (index: number) => {
         setToggleState(index);
+        onTabSelect(index);
     }
 
     return (
-        <div className='container'>
-            <div className='tabs-wrapper'>
-                <div 
-                className={toggleState === 1 ? 'tabs active-tab' : 'tabs'} 
-                onClick={() => toggleTab(1)}
-                >Pantry</div>
-                <div 
-                className={toggleState === 2 ? 'tabs active-tab' : 'tabs'} 
-                onClick={() => toggleTab(2)}
-                >Groceries</div>
-                <div 
-                className={toggleState === 3 ? 'tabs active-tab' : 'tabs'} 
-                onClick={() => toggleTab(3)}
-                >Recipes</div>
-            </div>
-
-            <div className='content-tabs'>
-                <div className={toggleState === 1 ? 'content active-content' : 'content'}>
-                    <h2>Pantry placeholder</h2>
+        <div className='tabs-wrapper'>
+            <div className='edge'></div>
+            {tabNames.map((tabName, i) =>
+                <div
+                    key={i}
+                    className={toggleState === i ? 'tabs active-tab' : 'tabs'}
+                    onClick={() => toggleTab(i)}
+                >
+                    {tabName}
                 </div>
-                <div className={toggleState === 2 ? 'content active-content' : 'content'}>
-                    <h2>Groceries placeholder</h2>
-                </div>
-                <div className={toggleState === 3 ? 'content active-content' : 'content'}>
-                    <h2>Recipes placeholder</h2>
-                </div>
-            </div>
+            )}
+            <div className='edge'></div>
         </div>
     )
 }

@@ -1,12 +1,28 @@
-.navigation {
-    height: 100%;
-    padding: 10px 40px;
-    outline: 2px solid yellow;
-}
-
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: sticky;
+    height: 6%;
+    padding: 10px 20px 15px 20px;
+    background: rgba(208, 247, 232, 0.842);
+}
+
+.app-name {
+    font-size: 24px;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.nav-buttons > * {
+    padding: 0 6px;
+}
+
+.edit-button, .delete-button {
+    border: none;
+    background: none;
 }
