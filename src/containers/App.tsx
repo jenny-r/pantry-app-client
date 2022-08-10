@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.css';
+import { Pantry } from '../components/Pantry/Pantry';
 
 function App() {
   return (
     <div className="App">
-        <p>
-          Hi
-        </p>
+      <Pantry />
     </div>
   );
 }
