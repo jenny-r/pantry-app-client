@@ -1,10 +1,6 @@
 import React from 'react';
-import { PantryItem, PantryItemType } from './PantryItem';
+import { PantryItem, PantryItemType } from '../PantryItem/PantryItem';
 import './Pantry.css';
-
-interface UserPantry {
-    pantryItemData: Array<any>;
-}
 
 export function Pantry() {
 
@@ -78,16 +74,10 @@ export function Pantry() {
         quantity: 4
     }];
 
-    const content = fakeItems.map((item) =>
-        <PantryItem item={item} />)
-
     return (
-        <div className='pantry-list'>
-            <ul>
-                {content}
-            </ul>
+        <div className='Pantry-pantry-list'>
+            {fakeItems.map((item) =>
+                <PantryItem item={item} />)}
         </div>
     )
 }
-
-//make pantry item component
