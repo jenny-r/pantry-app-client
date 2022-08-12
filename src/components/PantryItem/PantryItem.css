@@ -1,0 +1,68 @@
+.PantryItem-pantry-list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.PantryItem-item-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 70px;
+}
+
+.PantryItem-name-container-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.PantryItem-name {
+    margin: 0px;
+    padding: 0 0 5px 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.PantryItem-type {
+    font-size: 16px;
+    margin: 0px;
+}
+
+.PantryItem-button-container-right {
+    display: flex;
+    flex-direction: row;
+}
+
+.PantryItem-count-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.PantryItem-count-button {
+    font-size: 20px;
+    height: 32px;
+    width: 32px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.PantryItem-quantity {
+    width: 28px;
+    text-align: center;
+    margin: auto;
+}
+
+.PantryItem-grocery-button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0 0 0 15px;
+}
+
+.PantryItem-border-bottom {
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.274);
+    width: 100%;
+}
