@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Tabs.css';
 
 export function Tabs({ tabNames, onTabSelect }: { tabNames: Array<string>, onTabSelect: Function }) {
