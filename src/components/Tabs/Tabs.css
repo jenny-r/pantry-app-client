@@ -1,0 +1,36 @@
+.Tabs-tabs-container {
+    display: flex;
+    flex-direction: row;
+    background: rgba(208, 247, 232, 0.842);
+}
+
+.Tabs-edge {
+    width: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+}
+
+.Tabs-tabs-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.Tabs-tabs {
+    flex: 1;
+    padding: 20px 0px;
+    text-align: center;
+    background: rgb(211, 247, 253);
+    border: 1px solid rgba(0, 0, 0, 0.274);
+    border-radius: 10px 10px 0px 0px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.Tabs-active-tab {
+    background: white;
+    border-bottom: 1px solid transparent;
+}

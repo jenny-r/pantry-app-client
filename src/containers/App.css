@@ -4,9 +4,12 @@
   position: absolute;
   width: 100%;
   height: 100vh;
-  /* overflow: hidden; */
   margin: 0;
   padding: 0;
-  /* box-sizing: border-box; */
-  /* background: rgba(208, 247, 232, 0.842); */
+}
+
+.content {
+  display: block;
+  height: 42.5rem;
+  overflow: auto;
 }
