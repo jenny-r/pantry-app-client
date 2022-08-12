@@ -32,7 +32,6 @@ function App() {
   }
 
   const changeIndex = (index: number) => {
-    console.log(index);
     setIndex(index);
   }
 

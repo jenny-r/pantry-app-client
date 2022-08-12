@@ -11,18 +11,20 @@ export function Tabs({ tabNames, onTabSelect }: { tabNames: Array<string>, onTab
     }
 
     return (
-        <div className='tabs-wrapper'>
-            <div className='edge'></div>
-            {tabNames.map((tabName, i) =>
-                <div
-                    key={i}
-                    className={toggleState === i ? 'tabs active-tab' : 'tabs'}
-                    onClick={() => toggleTab(i)}
-                >
-                    {tabName}
-                </div>
-            )}
-            <div className='edge'></div>
+        <div className='Tabs-tabs-container'>
+            <div className='Tabs-edge' />
+            <div className='Tabs-tabs-wrapper'>
+                {tabNames.map((tabName, i) =>
+                    <div
+                        key={i}
+                        className={toggleState === i ? 'Tabs-tabs Tabs-active-tab' : 'Tabs-tabs'}
+                        onClick={() => toggleTab(i)}
+                    >
+                        {tabName}
+                    </div>
+                )}
+            </div>
+            <div className='Tabs-edge' />
         </div>
     )
 }
