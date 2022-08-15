@@ -1,5 +1,6 @@
 import React from 'react';
 import { PantryItem, PantryItemType } from '../PantryItem/PantryItem';
+import { SearchBar } from '../SearchBar/SearchBar';
 import './Pantry.css';
 
 export function Pantry() {
@@ -75,9 +76,12 @@ export function Pantry() {
     }];
 
     return (
-        <div className='Pantry-pantry-list'>
-            {fakeItems.map((item) =>
-                <PantryItem item={item} />)}
+        <div className='Pantry-pantry'>
+            <SearchBar />
+            <div className='Pantry-pantry-item-list'>
+                {fakeItems.map((item) =>
+                    <PantryItem item={item} />)}
+            </div>
         </div>
     )
 }
