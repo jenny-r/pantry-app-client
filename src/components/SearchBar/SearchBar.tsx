@@ -12,19 +12,20 @@ export function SearchBar() {
                 <img className='SearchBar-search-icon' src={searchIcon} alt='search' />
                 <input className='SearchBar-search-input' type='text' placeholder='Search' />
             </div>
-
-            <button className='SearchBar-button'>
-                <img src={editIcon} alt='edit' />
-            </button>
-            <button className='SearchBar-button'>
-                <img src={deleteIcon} alt='delete' />
-            </button>
-            <div className='SearchBar-sort-container'>
-                <div className='SearchBar-sort-text-wrapper'>
-                    <div>Sort by:</div>
-                    <div>Name</div>
+            <div className='SearchBar-buttons-container'>
+                <button className='SearchBar-button'>
+                    <img className='SearchBar-button-image' src={editIcon} alt='edit' />
+                </button>
+                <button className='SearchBar-button'>
+                    <img className='SearchBar-button-image' src={deleteIcon} alt='delete' />
+                </button>
+                <div className='SearchBar-sort-container'>
+                    <div className='SearchBar-sort-text-wrapper'>
+                        <div>Sort by:</div>
+                        <div>Name</div>
+                    </div>
+                    <img className='SearchBar-sort-icon' src={sortIcon} alt='sort' />
                 </div>
-                <img className='SearchBar-sort-icon' src={sortIcon} alt='sort' />
             </div>
         </div>
     )
