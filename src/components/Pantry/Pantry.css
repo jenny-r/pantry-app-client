@@ -1,3 +1,11 @@
-.Pantry-pantry-list {
-    height: fit-content;
+.Pantry-pantry {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.Pantry-pantry-item-list {
+    height: 42.5em;
+    /* flex: 1; */
+    overflow: auto;
 }

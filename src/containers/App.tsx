@@ -12,21 +12,15 @@ function App() {
   let content = null;
   if (index === 0) {
     content = (
-      <div className='content'>
-        <Pantry />
-      </div>
+      <Pantry />
     )
   } else if (index === 1) {
     content = (
-      <div className='content'>
-        <h2>Groceries placeholder</h2>
-      </div>
+      <h2>Groceries placeholder</h2>
     )
   } else if (index === 2) {
     content = (
-      <div className='content'>
-        <h2>Recipes placeholder</h2>
-      </div>
+      <h2>Recipes placeholder</h2>
     )
   }
 
@@ -34,7 +28,9 @@ function App() {
     <div className='App'>
       <Navigation />
       <Tabs tabNames={tabNames} onTabSelect={setIndex} />
-      {content}
+      <div className='App-content'>
+        {content}
+      </div>
     </div>
   );
 }
