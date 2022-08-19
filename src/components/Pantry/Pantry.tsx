@@ -1,4 +1,5 @@
 import React from 'react';
+import { AddButton } from '../AddButton/AddButton';
 import { PantryItem, PantryItemType } from '../PantryItem/PantryItem';
 import { SearchBar } from '../SearchBar/SearchBar';
 import './Pantry.css';
@@ -82,6 +83,7 @@ export function Pantry() {
                 {fakeItems.map((item) =>
                     <PantryItem item={item} />)}
             </div>
+            <AddButton />
         </div>
     )
 }
