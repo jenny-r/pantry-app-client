@@ -1,8 +1,8 @@
 import { PantryItem } from '../PantryItem/PantryItem';
-import './Pantry.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType } from '../../types/types';
 import { addPantryItem } from '../../store/pantrySlice';
+import './Pantry.css';
 
 export function Pantry() {
 

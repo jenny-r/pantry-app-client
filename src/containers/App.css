@@ -8,8 +8,6 @@
   padding: 0;
 }
 
-.content {
-  display: block;
-  height: 42.5rem;
-  overflow: auto;
+.App-content {
+  flex: 1;
 }
