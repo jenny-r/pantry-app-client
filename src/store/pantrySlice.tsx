@@ -120,9 +120,7 @@ const pantrySlice = createSlice({
             state.pantryItems[Object.keys(state.pantryItems).length + 1] = action.payload;
         },
         increase: (state, action: PayloadAction<string>) => {
-            if (state.pantryItems[action.payload].quantity >= 0) {
-                state.pantryItems[action.payload].quantity += 1;
-            }
+            state.pantryItems[action.payload].quantity += 1;
         },
         decrease: (state, action: PayloadAction<string>) => {
             if (state.pantryItems[action.payload].quantity > 0) {
