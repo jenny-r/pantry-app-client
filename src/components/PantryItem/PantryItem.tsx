@@ -1,4 +1,6 @@
 import groceryIcon from '../../assets/shopping-cart-icon.png';
+import decreaseIcon from '../../assets/minus-icon.png';
+import increaseIcon from '../../assets/plus-icon.png';
 import { PantryItemType } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { increase, decrease } from '../../store/pantrySlice';
@@ -24,12 +26,24 @@ export function PantryItem({ item }: PantryItemProps) {
                         <button
                             className='PantryItem-count-button decrease'
                             onClick={() => dispatch(decrease(item.id))}
-                        >-</button>
+                        >
+                            <img
+                                className='PantryItem-count-button-image'
+                                src={decreaseIcon}
+                                alt='decrease'
+                            />
+                        </button>
                         <div className='PantryItem-quantity'>{item.quantity}</div>
                         <button
                             className='PantryItem-count-button increase'
                             onClick={() => dispatch(increase(item.id))}
-                        >+</button>
+                        >
+                            <img
+                                className='PantryItem-count-button-image'
+                                src={increaseIcon}
+                                alt='increase'
+                            />
+                        </button>
                     </div>
                     <button className='PantryItem-grocery-button'>
                         <img src={groceryIcon} alt='add to grocery list' />
