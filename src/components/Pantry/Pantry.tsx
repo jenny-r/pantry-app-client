@@ -16,18 +16,16 @@ export function Pantry() {
         <div className='Pantry-pantry'>
             <SearchBar />
             <div className='Pantry-pantry-item-list'>
-                <button
-                    onClick={() => dispatch(addPantryItem({
-                        id: '18',
-                        name: 'Kale',
-                        unit: 'Single',
-                        quantity: 4
-                    }))}
-                >Add item</button>
                 {pantryItems.map((item) =>
                     <PantryItem item={item} key={item.name} />)}
             </div>
-            <AddButton />
+            <AddButton
+                onClick={() => dispatch(addPantryItem({
+                    id: '18',
+                    name: 'Kale',
+                    unit: 'Single',
+                    quantity: 4
+                }))} />
         </div>
     )
 }
