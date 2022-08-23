@@ -1,4 +1,5 @@
 import { PantryItem } from '../PantryItem/PantryItem';
+import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType } from '../../types/types';
 import { addPantryItem } from '../../store/pantrySlice';
@@ -26,6 +27,7 @@ export function Pantry() {
                 {pantryItems.map((item) =>
                     <PantryItem item={item} key={item.name} />)}
             </div>
+            <AddButton />
         </div>
     )
 }
