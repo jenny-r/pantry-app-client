@@ -1,7 +1,7 @@
 import groceryIcon from '../../assets/shopping-cart-icon.png';
 import decreaseIcon from '../../assets/minus-icon.png';
 import increaseIcon from '../../assets/plus-icon.png';
-import { PantryItemType } from '../../types/types';
+import { Mode, PantryItemType } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { increase, decrease } from '../../store/pantrySlice';
 import './PantryItem.css';
@@ -14,12 +14,29 @@ export function PantryItem({ item }: PantryItemProps) {
 
     const dispatch = useAppDispatch();
 
+    const pantryMode: Mode = useAppSelector((state) => state.pantry.pantryMode);
+
+    let pantryItemStyle = null;
+
+    if (pantryMode === Mode.Delete) {
+        pantryItemStyle = {
+            display: 'inline-block'
+        }
+    } else {
+        pantryItemStyle = {
+            display: 'none'
+        }
+    }
+
     return (
         <div className='PantryItem-pantry-list-item'>
             <div className='PantryItem-item-container'>
-                <div className='PantryItem-name-container-left'>
-                    <h3 className='PantryItem-name'>{item.name}</h3>
-                    <p className='PantryItem-unit'>{item.unit}</p>
+                <div className='PantryItem-checkbox-container-left'>
+                    <input type='checkbox' className='PantryItem-checkbox' style={pantryItemStyle} />
+                    <div className='PantryItem-name-container-left'>
+                        <h3 className='PantryItem-name'>{item.name}</h3>
+                        <p className='PantryItem-unit'>{item.unit}</p>
+                    </div>
                 </div>
                 <div className='PantryItem-button-container-right'>
                     <div className='PantryItem-count-container'>

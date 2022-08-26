@@ -4,3 +4,9 @@ export interface PantryItemType {
     unit: string;
     quantity: number;
 }
+
+export enum Mode {
+    Default,
+    Edit,
+    Delete
+}
