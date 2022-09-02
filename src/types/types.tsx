@@ -5,7 +5,7 @@ export interface PantryItemType {
     quantity: number;
 }
 
-export enum Mode {
+export enum PantryMode {
     Default,
     Edit,
     Delete

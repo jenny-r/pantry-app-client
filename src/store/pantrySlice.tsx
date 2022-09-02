@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PantryItemType, Mode } from '../types/types';
+import { PantryItemType, PantryMode } from '../types/types';
 
 interface PantryState {
     pantryItems: { [id: string]: PantryItemType },
-    pantryMode: Mode
+    pantryMode: PantryMode
 }
 
 const initialState: PantryState = {
@@ -111,7 +111,7 @@ const initialState: PantryState = {
             quantity: 4
         }
     },
-    pantryMode: Mode.Default
+    pantryMode: PantryMode.Default
 }
 
 const pantrySlice = createSlice({
@@ -121,7 +121,7 @@ const pantrySlice = createSlice({
         addPantryItem: (state, action: PayloadAction<PantryItemType>) => {
             state.pantryItems[Object.keys(state.pantryItems).length + 1] = action.payload;
         },
-        changePantryMode: (state, action: PayloadAction<Mode>) => {
+        changePantryMode: (state, action: PayloadAction<PantryMode>) => {
             state.pantryMode = action.payload;
         },
         increase: (state, action: PayloadAction<string>) => {
