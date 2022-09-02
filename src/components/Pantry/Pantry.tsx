@@ -1,8 +1,8 @@
 import { PantryItem } from '../PantryItem/PantryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { PantryItemType } from '../../types/types';
-import { addPantryItem } from '../../store/pantrySlice';
+import { PantryItemType, PantryMode } from '../../types/types';
+import { addPantryItem, changePantryMode } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import './Pantry.css';
 
@@ -14,7 +14,7 @@ export function Pantry() {
 
     return (
         <div className='Pantry-pantry'>
-            <SearchBar />
+            <SearchBar onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))} onClickEdit={() => dispatch(changePantryMode(PantryMode.Edit))} />
             <div className='Pantry-pantry-item-list'>
                 {pantryItems.map((item) =>
                     <PantryItem item={item} key={item.name} />)}

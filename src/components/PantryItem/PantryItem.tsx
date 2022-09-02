@@ -1,7 +1,7 @@
 import groceryIcon from '../../assets/shopping-cart-icon.png';
 import decreaseIcon from '../../assets/minus-icon.png';
 import increaseIcon from '../../assets/plus-icon.png';
-import { PantryItemType } from '../../types/types';
+import { PantryMode, PantryItemType } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { increase, decrease } from '../../store/pantrySlice';
 import './PantryItem.css';
@@ -14,12 +14,22 @@ export function PantryItem({ item }: PantryItemProps) {
 
     const dispatch = useAppDispatch();
 
+    const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
+
+    let checkBox = null;
+    if (pantryMode === PantryMode.Delete) {
+        checkBox = (<input type='checkbox' className='PantryItem-checkbox' />)
+    }
+
     return (
         <div className='PantryItem-pantry-list-item'>
             <div className='PantryItem-item-container'>
-                <div className='PantryItem-name-container-left'>
-                    <h3 className='PantryItem-name'>{item.name}</h3>
-                    <p className='PantryItem-unit'>{item.unit}</p>
+                <div className='PantryItem-checkbox-container-left'>
+                    {checkBox}
+                    <div className='PantryItem-name-container-left'>
+                        <h3 className='PantryItem-name'>{item.name}</h3>
+                        <p className='PantryItem-unit'>{item.unit}</p>
+                    </div>
                 </div>
                 <div className='PantryItem-button-container-right'>
                     <div className='PantryItem-count-container'>
