@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType } from '../../types/types';
 import { addPantryItem } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
+import { Button } from '../Button/Button';
 import './Pantry.css';
 
 export function Pantry() {
@@ -16,18 +17,26 @@ export function Pantry() {
         <div className='Pantry-pantry'>
             <SearchBar />
             <div className='Pantry-pantry-item-list'>
-                <button
+                {/* <button
                     onClick={() => dispatch(addPantryItem({
                         id: '18',
                         name: 'Kale',
                         unit: 'Single',
                         quantity: 4
                     }))}
-                >Add item</button>
+                >Add item</button> */}
                 {pantryItems.map((item) =>
                     <PantryItem item={item} key={item.name} />)}
             </div>
             <AddButton />
+            {/* <div className='Pantry-button-container'>
+                <div className='Pantry-button-wrapper'>
+                    <Button buttonText='Cancel' buttonColor='Button-gray' />
+                </div>
+                <div className='Pantry-button-wrapper'>
+                    <Button buttonText='Confirm' buttonColor='Button-blue' />
+                </div>
+            </div> */}
         </div>
     )
 }

@@ -1,0 +1,33 @@
+.Button-button {
+    flex: 1;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4);
+    transition-duration: .4s;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.Button-button:active {
+    transition: all 0.4s;
+}
+
+.Button-blue {
+    background-color: rgb(211, 247, 253);
+}
+
+.Button-blue:active {
+    background-color: rgb(226, 251, 255);
+}
+
+.Button-gray {
+    background-color: rgb(218, 222, 230);
+}
+
+.Button-gray:active {
+    background-color: rgb(229, 235, 241);
+}
