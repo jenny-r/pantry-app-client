@@ -13,6 +13,12 @@
     border-radius: 50px;
     margin: 15px 15px;
     background: rgb(211, 247, 253);
+    transition-duration: .4s;
+}
+
+.AddButton-button:active {
+    background: #81a2b1;
+    transition: all 0.4s;
 }
 
 .AddButton-button-image {
