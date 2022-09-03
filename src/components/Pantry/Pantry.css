@@ -9,3 +9,20 @@
     /* flex: 1; */
     overflow: auto;
 }
+
+.Pantry-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+}
+
+.Pantry-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 34px;
+    width: 150px;
+    margin: 20px 15px;
+}

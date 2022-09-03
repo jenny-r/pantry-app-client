@@ -13,6 +13,11 @@
     border-radius: 50px;
     margin: 15px 15px;
     background: rgb(211, 247, 253);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     transition-duration: .4s;
 }
 

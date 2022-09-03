@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType, PantryMode } from '../../types/types';
 import { addPantryItem, changePantryMode } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
+import { Button, ButtonColor } from '../Button/Button';
 import './Pantry.css';
 
 export function Pantry() {
@@ -26,6 +27,14 @@ export function Pantry() {
                     unit: 'Single',
                     quantity: 4
                 }))} />
+            {/* <div className='Pantry-button-container'>
+                <div className='Pantry-button-wrapper'>
+                    <Button buttonText='Cancel' buttonColor={ButtonColor.Gray} />
+                </div>
+                <div className='Pantry-button-wrapper'>
+                    <Button buttonText='Confirm' buttonColor={ButtonColor.Blue} />
+                </div>
+            </div> */}
         </div>
     )
 }
