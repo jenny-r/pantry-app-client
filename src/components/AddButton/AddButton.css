@@ -18,6 +18,12 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    transition-duration: .4s;
+}
+
+.AddButton-button:active {
+    background: #81a2b1;
+    transition: all 0.4s;
 }
 
 .AddButton-button-image {

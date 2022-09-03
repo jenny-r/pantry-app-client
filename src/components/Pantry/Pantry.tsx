@@ -1,8 +1,8 @@
 import { PantryItem } from '../PantryItem/PantryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { PantryItemType } from '../../types/types';
-import { addPantryItem } from '../../store/pantrySlice';
+import { PantryItemType, PantryMode } from '../../types/types';
+import { addPantryItem, changePantryMode } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button } from '../Button/Button';
 import './Pantry.css';
@@ -15,20 +15,18 @@ export function Pantry() {
 
     return (
         <div className='Pantry-pantry'>
-            <SearchBar />
+            <SearchBar onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))} onClickEdit={() => dispatch(changePantryMode(PantryMode.Edit))} />
             <div className='Pantry-pantry-item-list'>
-                {/* <button
-                    onClick={() => dispatch(addPantryItem({
-                        id: '18',
-                        name: 'Kale',
-                        unit: 'Single',
-                        quantity: 4
-                    }))}
-                >Add item</button> */}
                 {pantryItems.map((item) =>
                     <PantryItem item={item} key={item.name} />)}
             </div>
-            <AddButton />
+            <AddButton
+                onClick={() => dispatch(addPantryItem({
+                    id: '18',
+                    name: 'Kale',
+                    unit: 'Single',
+                    quantity: 4
+                }))} />
             {/* <div className='Pantry-button-container'>
                 <div className='Pantry-button-wrapper'>
                     <Button buttonText='Cancel' buttonColor='Button-gray' />
