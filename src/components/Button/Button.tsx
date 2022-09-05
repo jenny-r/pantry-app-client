@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './Button.css';
 
 export enum ButtonColor {
@@ -6,10 +5,16 @@ export enum ButtonColor {
     Gray = 'Button-gray'
 }
 
-export function Button({ buttonText, buttonColor }: { buttonText: string, buttonColor: ButtonColor }) {
+interface ButtonProps {
+    buttonText: string;
+    buttonColor: ButtonColor;
+    onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+export function Button({ buttonText, buttonColor, onClick }: ButtonProps) {
 
     return (
-        <button className={'Button-button ' + buttonColor}>
+        <button className={'Button-button ' + buttonColor} onClick={onClick}>
             {buttonText}
         </button>
     )

@@ -1,40 +1,74 @@
+import { useState, useEffect } from 'react'
 import { PantryItem } from '../PantryItem/PantryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType, PantryMode } from '../../types/types';
-import { addPantryItem, changePantryMode } from '../../store/pantrySlice';
+import { addPantryItem, deletePantryItems, changePantryMode } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import './Pantry.css';
 
 export function Pantry() {
+    const dispatch = useAppDispatch()
+    const [deleteList, setDeleteList] = useState<{ [id: string]: string }>({});
 
     const pantryItems: PantryItemType[] = useAppSelector((state) => Object.values(state.pantry.pantryItems));
+    const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
 
-    const dispatch = useAppDispatch()
+    useEffect(() => {
+        setDeleteList({});
+    }, [pantryMode]);
 
-    return (
-        <div className='Pantry-pantry'>
-            <SearchBar onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))} onClickEdit={() => dispatch(changePantryMode(PantryMode.Edit))} />
-            <div className='Pantry-pantry-item-list'>
-                {pantryItems.map((item) =>
-                    <PantryItem item={item} key={item.name} />)}
-            </div>
+    const addToDeleteList = (id: string, isChecked: boolean) => {
+        if (isChecked === true) {
+            deleteList[id] = id;
+            setDeleteList(deleteList);
+        } else {
+            delete deleteList[id];
+            setDeleteList(deleteList);
+        }
+    }
+    const cancelDelete = () => {
+        dispatch(changePantryMode(PantryMode.Default));
+    }
+
+    let addButton: any = null;
+    if (pantryMode === PantryMode.Default) {
+        addButton = (
             <AddButton
                 onClick={() => dispatch(addPantryItem({
                     id: '18',
                     name: 'Kale',
                     unit: 'Single',
                     quantity: 4
-                }))} />
-            {/* <div className='Pantry-button-container'>
+                }))}
+            />
+        );
+    }
+
+    let deleteModeButtons: any = null;
+    if (pantryMode === PantryMode.Delete) {
+        deleteModeButtons = (
+            <div className='Pantry-button-container'>
                 <div className='Pantry-button-wrapper'>
-                    <Button buttonText='Cancel' buttonColor={ButtonColor.Gray} />
+                    <Button buttonText='Cancel' buttonColor={ButtonColor.Gray} onClick={() => cancelDelete()} />
                 </div>
                 <div className='Pantry-button-wrapper'>
-                    <Button buttonText='Confirm' buttonColor={ButtonColor.Blue} />
+                    <Button buttonText='Confirm' buttonColor={ButtonColor.Blue} onClick={() => dispatch(deletePantryItems(Object.keys(deleteList)))} />
                 </div>
-            </div> */}
+            </div>
+        );
+    }
+
+    return (
+        <div className='Pantry-pantry'>
+            <SearchBar onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))} onClickEdit={() => dispatch(changePantryMode(PantryMode.Edit))} />
+            <div className='Pantry-pantry-item-list'>
+                {pantryItems.map((item) =>
+                    <PantryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} />)}
+            </div>
+            {addButton}
+            {deleteModeButtons}
         </div>
     )
 }

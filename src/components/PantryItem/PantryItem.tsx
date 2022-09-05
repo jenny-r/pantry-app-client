@@ -8,24 +8,27 @@ import './PantryItem.css';
 
 interface PantryItemProps {
     item: PantryItemType;
+    onClickDeleteCheckbox: (id: string, isChecked: boolean) => void;
 }
 
-export function PantryItem({ item }: PantryItemProps) {
-
+export function PantryItem({item, onClickDeleteCheckbox}: PantryItemProps) {
     const dispatch = useAppDispatch();
 
     const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
 
-    let checkBox = null;
+    let checkbox = null;
     if (pantryMode === PantryMode.Delete) {
-        checkBox = (<input type='checkbox' className='PantryItem-checkbox' />)
+        const deleteCheckboxClick = (cb: React.ChangeEvent<HTMLInputElement>) => {
+            onClickDeleteCheckbox(item.id, cb.target.checked);
+        }
+        checkbox = (<input type='checkbox' className='PantryItem-checkbox' onChange={deleteCheckboxClick} />)
     }
 
     return (
         <div className='PantryItem-pantry-list-item'>
             <div className='PantryItem-item-container'>
                 <div className='PantryItem-checkbox-container-left'>
-                    {checkBox}
+                    {checkbox}
                     <div className='PantryItem-name-container-left'>
                         <h3 className='PantryItem-name'>{item.name}</h3>
                         <p className='PantryItem-unit'>{item.unit}</p>
