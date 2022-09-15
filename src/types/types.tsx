@@ -8,5 +8,6 @@ export interface PantryItemType {
 export enum PantryMode {
     Default,
     Edit,
-    Delete
+    Delete,
+    Add
 }

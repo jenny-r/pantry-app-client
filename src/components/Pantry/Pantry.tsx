@@ -3,9 +3,10 @@ import { PantryItem } from '../PantryItem/PantryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType, PantryMode } from '../../types/types';
-import { addPantryItem, deletePantryItems, editPantryItems, changePantryMode } from '../../store/pantrySlice';
+import { deletePantryItems, editPantryItems, changePantryMode } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
+import { AddPantryItem } from '../AddPantryItem/AddPantryItem';
 import './Pantry.css';
 
 export function Pantry() {
@@ -41,14 +42,16 @@ export function Pantry() {
     if (pantryMode === PantryMode.Default) {
         addButton = (
             <AddButton
-                onClick={() => dispatch(addPantryItem({
-                    id: '18',
-                    name: 'Kale',
-                    unit: 'Single',
-                    quantity: 4
-                }))}
+                onClick={() => dispatch(changePantryMode(PantryMode.Add))}
             />
         );
+    }
+
+    let addPantryItemDialogue: any = null;
+    if (pantryMode === PantryMode.Add) {
+        addPantryItemDialogue = (
+            <AddPantryItem />
+        )
     }
 
     let deleteModeButtons: any = null;
@@ -89,6 +92,7 @@ export function Pantry() {
             {addButton}
             {deleteModeButtons}
             {editModeButtons}
+            {addPantryItemDialogue}
         </div>
     )
 }
