@@ -3,7 +3,7 @@
     border: none;
     border-radius: 50px;
     font-weight: bold;
-    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.4);
     transition-duration: .4s;
     -webkit-touch-callout: none;
     -webkit-user-select: none;

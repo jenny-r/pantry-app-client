@@ -1,0 +1,76 @@
+.AddPantryItem-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    width: 75%;
+    height: 200px;
+    position: fixed;
+    background: white;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.AddPantryItem-input-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 70%;
+    width: 100%;
+}
+
+.AddPantryItem-text-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    padding-left: 20px;
+}
+
+.AddPantryItem-name,
+.AddPantryItem-unit {
+    height: 32px;
+    width: 95%;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.AddPantryItem-name {
+    margin-bottom: 20px;
+}
+
+.AddPantryItem-quantity-input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 20%;
+}
+
+.AddPantryItem-quantity {
+    height: 32px;
+    width: 32px;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.AddPantryItem-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
+}
+
+.AddPantryItem-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 34px;
+    width: 150px;
+    margin: 0 15px 0 15px;
+}
