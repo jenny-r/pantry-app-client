@@ -23,7 +23,7 @@ export function AddPantryItem() {
     }
 
     const addPantryItemModeChange = () => {
-        if (name.length != 0 && unit.length != 0 && quantity.length != 0) {
+        if (name.length !== 0 && unit.length !== 0 && quantity.length !== 0) {
             dispatch(addPantryItem({
                 id: '18',
                 name: name,

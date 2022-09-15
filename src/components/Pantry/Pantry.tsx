@@ -3,7 +3,7 @@ import { PantryItem } from '../PantryItem/PantryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType, PantryMode } from '../../types/types';
-import { addPantryItem, deletePantryItems, changePantryMode } from '../../store/pantrySlice';
+import { deletePantryItems, editPantryItems, changePantryMode } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddPantryItem } from '../AddPantryItem/AddPantryItem';
@@ -12,6 +12,7 @@ import './Pantry.css';
 export function Pantry() {
     const dispatch = useAppDispatch()
     const [deleteList, setDeleteList] = useState<{ [id: string]: string }>({});
+    const [editList, setEditList] = useState<{ [id: string]: PantryItemType }>({});
 
     const pantryItems: PantryItemType[] = useAppSelector((state) => Object.values(state.pantry.pantryItems));
     const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
@@ -29,7 +30,12 @@ export function Pantry() {
             setDeleteList(deleteList);
         }
     }
-    const cancelDelete = () => {
+    const addToEditList = (pantryItem: PantryItemType) => {
+        editList[pantryItem.id] = pantryItem;
+        setEditList(editList);
+        console.log(editList)
+    }
+    const cancelMode = () => {
         dispatch(changePantryMode(PantryMode.Default));
     }
 
@@ -54,10 +60,24 @@ export function Pantry() {
         deleteModeButtons = (
             <div className='Pantry-button-container'>
                 <div className='Pantry-button-wrapper'>
-                    <Button buttonText='Cancel' buttonColor={ButtonColor.Gray} onClick={() => cancelDelete()} />
+                    <Button buttonText='Cancel' buttonColor={ButtonColor.Gray} onClick={cancelMode} />
                 </div>
                 <div className='Pantry-button-wrapper'>
                     <Button buttonText='Confirm' buttonColor={ButtonColor.Blue} onClick={() => dispatch(deletePantryItems(Object.keys(deleteList)))} />
+                </div>
+            </div>
+        );
+    }
+
+    let editModeButtons: any = null;
+    if (pantryMode === PantryMode.Edit) {
+        editModeButtons = (
+            <div className='Pantry-button-container'>
+                <div className='Pantry-button-wrapper'>
+                    <Button buttonText='Cancel' buttonColor={ButtonColor.Gray} onClick={cancelMode} />
+                </div>
+                <div className='Pantry-button-wrapper'>
+                    <Button buttonText='Confirm' buttonColor={ButtonColor.Blue} onClick={() => dispatch(editPantryItems(editList))} />
                 </div>
             </div>
         );
@@ -68,10 +88,11 @@ export function Pantry() {
             <SearchBar onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))} onClickEdit={() => dispatch(changePantryMode(PantryMode.Edit))} />
             <div className='Pantry-pantry-item-list'>
                 {pantryItems.map((item) =>
-                    <PantryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} />)}
+                    <PantryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} />)}
             </div>
             {addButton}
             {deleteModeButtons}
+            {editModeButtons}
             {addPantryItemDialogue}
         </div>
     )
