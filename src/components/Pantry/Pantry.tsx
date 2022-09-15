@@ -12,7 +12,7 @@ import './Pantry.css';
 export function Pantry() {
     const dispatch = useAppDispatch()
     const [deleteList, setDeleteList] = useState<{ [id: string]: string }>({});
-    const [editList, setEditList] = useState<PantryItemType[]>([]);
+    const [editList, setEditList] = useState<{ [id: string]: PantryItemType }>({});
 
     const pantryItems: PantryItemType[] = useAppSelector((state) => Object.values(state.pantry.pantryItems));
     const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
@@ -31,8 +31,9 @@ export function Pantry() {
         }
     }
     const addToEditList = (pantryItem: PantryItemType) => {
-        editList.push(pantryItem);
+        editList[pantryItem.id] = pantryItem;
         setEditList(editList);
+        console.log(editList)
     }
     const cancelMode = () => {
         dispatch(changePantryMode(PantryMode.Default));

@@ -127,9 +127,9 @@ const pantrySlice = createSlice({
             }
             state.pantryMode = PantryMode.Default;
         },
-        editPantryItems: (state, action: PayloadAction<PantryItemType[]>) => {
-            for (let i = 0; i < action.payload.length; i++) {
-                state.pantryItems[action.payload[i].id] = action.payload[i];
+        editPantryItems: (state, action: PayloadAction<{ [id: string]: PantryItemType }>) => {
+            for (let id of Object.keys(action.payload)) {
+                state.pantryItems[id] = action.payload[id];
             }
             state.pantryMode = PantryMode.Default;
         },
