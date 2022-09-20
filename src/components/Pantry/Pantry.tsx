@@ -3,7 +3,7 @@ import { PantryItem } from '../PantryItem/PantryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType, PantryMode } from '../../types/types';
-import { deletePantryItems, editPantryItems, changePantryMode } from '../../store/pantrySlice';
+import { deletePantryItems, editPantryItems, changePantryMode, setSearchField } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddPantryItem } from '../AddPantryItem/AddPantryItem';
@@ -16,6 +16,7 @@ export function Pantry() {
 
     const pantryItems: PantryItemType[] = useAppSelector((state) => Object.values(state.pantry.pantryItems));
     const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
+    const searchField: string = useAppSelector((state) => state.pantry.searchField)
 
     useEffect(() => {
         setDeleteList({});
@@ -37,6 +38,15 @@ export function Pantry() {
     }
     const cancelMode = () => {
         dispatch(changePantryMode(PantryMode.Default));
+    }
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setSearchField(e.target.value));
+    }
+
+    let pantryItemsList: PantryItemType[] = pantryItems;
+    if (searchField !== '') {
+        const lowerCaseSearchField = searchField.toLowerCase();
+        pantryItemsList = pantryItems.filter(item => item.name.toLowerCase().includes(lowerCaseSearchField));
     }
 
     let addButton: any = null;
@@ -85,9 +95,13 @@ export function Pantry() {
 
     return (
         <div className='Pantry-pantry'>
-            <SearchBar onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))} onClickEdit={() => dispatch(changePantryMode(PantryMode.Edit))} />
+            <SearchBar
+                onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))}
+                onClickEdit={() => dispatch(changePantryMode(PantryMode.Edit))}
+                onSearchChange={handleSearchChange}
+            />
             <div className='Pantry-pantry-item-list'>
-                {pantryItems.map((item) =>
+                {pantryItemsList.map((item) =>
                     <PantryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} />)}
             </div>
             {addButton}

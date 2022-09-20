@@ -1,17 +1,20 @@
-import searchIcon from '../../assets/search-icon.png';
+import React from 'react';
+import { SearchField } from '../SearchField/SearchField';
 import sortIcon from '../../assets/down-caret-icon.png';
 import editIcon from '../../assets/edit-pencil-icon.png';
 import deleteIcon from '../../assets/trash-can-icon.png';
-import React from 'react';
 import './SearchBar.css';
 
-export function SearchBar({ onClickDelete, onClickEdit }: { onClickDelete: React.MouseEventHandler<HTMLButtonElement>, onClickEdit: React.MouseEventHandler<HTMLButtonElement> }) {
+interface SearchBarProps {
+    onClickDelete: React.MouseEventHandler<HTMLButtonElement>,
+    onClickEdit: React.MouseEventHandler<HTMLButtonElement>,
+    onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export function SearchBar({ onClickDelete, onClickEdit, onSearchChange }: SearchBarProps) {
     return (
         <div className='SearchBar-search-bar'>
-            <div className='SearchBar-search-input-container'>
-                <img className='SearchBar-search-icon' src={searchIcon} alt='search' />
-                <input className='SearchBar-search-input' type='text' placeholder='Search' />
-            </div>
+            <SearchField onSearchChange={onSearchChange} />
             <div className='SearchBar-buttons-container'>
                 <button
                     className='SearchBar-button'
