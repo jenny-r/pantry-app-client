@@ -11,3 +11,8 @@ export enum PantryMode {
     Delete,
     Add
 }
+
+export enum PantrySort {
+    Name = 'Name',
+    Quantity = 'Quantity'
+}

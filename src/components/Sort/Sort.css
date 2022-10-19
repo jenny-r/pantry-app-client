@@ -1,0 +1,13 @@
+.Sort-container {
+    font-size: 14px;
+}
+
+.Sort-label {
+    padding-left: 4px;
+}
+
+.Sort-select {
+    border: none;
+    font-family: sans-serif;
+    font-size: 14px;
+}

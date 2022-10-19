@@ -35,25 +35,6 @@
     align-items: center;
 }
 
-.SearchBar-sort-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.SearchBar-sort-text-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    font-size: 14px;
-}
-
-.SearchBar-sort-icon {
-    height: 16px;
-    margin-left: 4px;
-}
-
 .SearchBar-button {
     width: 24px;
     height: 24px;
