@@ -3,7 +3,7 @@ import { PantryItem } from '../PantryItem/PantryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType, PantryMode, PantrySort } from '../../types/types';
-import { deletePantryItems, editPantryItems, changePantryMode, changePantrySort } from '../../store/pantrySlice';
+import { deletePantryItems, editPantryItems, changePantryMode, changePantrySort, setSearchField } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddPantryItem } from '../AddPantryItem/AddPantryItem';
@@ -17,6 +17,7 @@ export function Pantry() {
     const pantryItems: PantryItemType[] = useAppSelector((state) => Object.values(state.pantry.pantryItems));
     const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
     const pantrySort: PantrySort = useAppSelector((state) => state.pantry.pantrySort);
+    const searchField: string = useAppSelector((state) => state.pantry.searchField)
 
     const sortOptionNames: string[] = Object.values(PantrySort);
     const sortedPantryItems = useMemo(() => {
@@ -60,6 +61,15 @@ export function Pantry() {
             dispatch(changePantrySort(PantrySort.Quantity))
         }
     };
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setSearchField(e.target.value));
+    }
+
+    let pantryItemsList: PantryItemType[] = pantryItems;
+    if (searchField !== '') {
+        const lowerCaseSearchField = searchField.toLowerCase();
+        pantryItemsList = pantryItems.filter(item => item.name.toLowerCase().includes(lowerCaseSearchField));
+    }
 
     let addButton: any = null;
     if (pantryMode === PantryMode.Default) {
@@ -112,6 +122,7 @@ export function Pantry() {
                 onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))}
                 onClickEdit={() => dispatch(changePantryMode(PantryMode.Edit))}
                 onSortChange={handleSortChange}
+                onSearchChange={handleSearchChange}
             />
             <div className='Pantry-pantry-item-list'>
                 {sortedPantryItems.map((item) =>

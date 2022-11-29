@@ -4,7 +4,8 @@ import { PantryItemType, PantryMode, PantrySort } from '../types/types';
 interface PantryState {
     pantryItems: { [id: string]: PantryItemType },
     pantryMode: PantryMode,
-    pantrySort: PantrySort
+    pantrySort: PantrySort,
+    searchField: string
 }
 
 const initialState: PantryState = {
@@ -113,7 +114,8 @@ const initialState: PantryState = {
         }
     },
     pantryMode: PantryMode.Default,
-    pantrySort: PantrySort.Name
+    pantrySort: PantrySort.Name,
+    searchField: ''
 }
 
 const pantrySlice = createSlice({
@@ -148,10 +150,13 @@ const pantrySlice = createSlice({
             if (state.pantryItems[action.payload].quantity > 0) {
                 state.pantryItems[action.payload].quantity -= 1;
             }
+        },
+        setSearchField: (state, action: PayloadAction<string>) => {
+            state.searchField = action.payload;
         }
     }
 })
 
-export const { addPantryItem, deletePantryItems, editPantryItems, changePantryMode, changePantrySort, increase, decrease } = pantrySlice.actions;
+export const { addPantryItem, deletePantryItems, editPantryItems, changePantryMode, changePantrySort, increase, decrease, setSearchField } = pantrySlice.actions;
 
 export default pantrySlice.reducer;
