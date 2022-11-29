@@ -1,17 +1,19 @@
 import React from 'react';
+import { Sort } from '../Sort/Sort';
 import { SearchField } from '../SearchField/SearchField';
-import sortIcon from '../../assets/down-caret-icon.png';
 import editIcon from '../../assets/edit-pencil-icon.png';
 import deleteIcon from '../../assets/trash-can-icon.png';
 import './SearchBar.css';
 
 interface SearchBarProps {
+    sortOptionNames: string[],
     onClickDelete: React.MouseEventHandler<HTMLButtonElement>,
     onClickEdit: React.MouseEventHandler<HTMLButtonElement>,
+    onSortChange: (event: React.ChangeEvent<HTMLSelectElement>) => void,
     onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export function SearchBar({ onClickDelete, onClickEdit, onSearchChange }: SearchBarProps) {
+export function SearchBar({ sortOptionNames, onClickDelete, onClickEdit, onSortChange, onSearchChange }: SearchBarProps) {
     return (
         <div className='SearchBar-search-bar'>
             <SearchField onSearchChange={onSearchChange} />
@@ -28,13 +30,10 @@ export function SearchBar({ onClickDelete, onClickEdit, onSearchChange }: Search
                 >
                     <img className='SearchBar-button-image' src={deleteIcon} alt='delete' />
                 </button>
-                <div className='SearchBar-sort-container'>
-                    <div className='SearchBar-sort-text-wrapper'>
-                        <div>Sort by:</div>
-                        <div>Name</div>
-                    </div>
-                    <img className='SearchBar-sort-icon' src={sortIcon} alt='sort' />
-                </div>
+                <Sort
+                    sortOptionNames={sortOptionNames}
+                    onSortChange={onSortChange}
+                />
             </div>
         </div>
     )

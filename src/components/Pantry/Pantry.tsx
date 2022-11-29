@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { PantryItem } from '../PantryItem/PantryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { PantryItemType, PantryMode } from '../../types/types';
-import { deletePantryItems, editPantryItems, changePantryMode, setSearchField } from '../../store/pantrySlice';
+import { PantryItemType, PantryMode, PantrySort } from '../../types/types';
+import { deletePantryItems, editPantryItems, changePantryMode, changePantrySort, setSearchField } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddPantryItem } from '../AddPantryItem/AddPantryItem';
@@ -16,7 +16,19 @@ export function Pantry() {
 
     const pantryItems: PantryItemType[] = useAppSelector((state) => Object.values(state.pantry.pantryItems));
     const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
+    const pantrySort: PantrySort = useAppSelector((state) => state.pantry.pantrySort);
     const searchField: string = useAppSelector((state) => state.pantry.searchField)
+
+    const sortOptionNames: string[] = Object.values(PantrySort);
+    const sortedPantryItems = useMemo(() => {
+        let temp: PantryItemType[] = [...pantryItems];
+        if (pantrySort === PantrySort.Name) {
+            temp.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (pantrySort === PantrySort.Quantity) {
+            temp.sort((n1, n2) => n1.quantity - n2.quantity);
+        }
+        return temp;
+    }, [pantryItems, pantrySort])
 
     useEffect(() => {
         setDeleteList({});
@@ -39,6 +51,16 @@ export function Pantry() {
     const cancelMode = () => {
         dispatch(changePantryMode(PantryMode.Default));
     }
+    const handleSortChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+        const { options, selectedIndex } = event.target;
+        const text: string = options[selectedIndex].text.toLowerCase();
+
+        if (text === 'name') {
+            dispatch(changePantrySort(PantrySort.Name))
+        } else if (text === 'quantity') {
+            dispatch(changePantrySort(PantrySort.Quantity))
+        }
+    };
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchField(e.target.value));
     }
@@ -96,12 +118,14 @@ export function Pantry() {
     return (
         <div className='Pantry-pantry'>
             <SearchBar
+                sortOptionNames={sortOptionNames}
                 onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))}
                 onClickEdit={() => dispatch(changePantryMode(PantryMode.Edit))}
+                onSortChange={handleSortChange}
                 onSearchChange={handleSearchChange}
             />
             <div className='Pantry-pantry-item-list'>
-                {pantryItemsList.map((item) =>
+                {sortedPantryItems.map((item) =>
                     <PantryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} />)}
             </div>
             {addButton}
