@@ -17,8 +17,7 @@ export function Pantry() {
     const pantryItems: PantryItemType[] = useAppSelector((state) => Object.values(state.pantry.pantryItems));
     const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
     const pantrySort: PantrySort = useAppSelector((state) => state.pantry.pantrySort);
-    const searchField: string = useAppSelector((state) => state.pantry.searchField)
-
+    const searchField: string = useAppSelector((state) => state.pantry.searchField);
     const sortOptionNames: string[] = Object.values(PantrySort);
     const sortedPantryItems = useMemo(() => {
         let temp: PantryItemType[] = [...pantryItems];
@@ -27,8 +26,12 @@ export function Pantry() {
         } else if (pantrySort === PantrySort.Quantity) {
             temp.sort((n1, n2) => n1.quantity - n2.quantity);
         }
+        if (searchField !== '') {
+            const lowerCaseSearchField = searchField.toLowerCase();
+            temp = temp.filter(item => item.name.toLowerCase().includes(lowerCaseSearchField));
+        }
         return temp;
-    }, [pantryItems, pantrySort])
+    }, [pantryItems, pantrySort, searchField])
 
     useEffect(() => {
         setDeleteList({});
@@ -63,12 +66,6 @@ export function Pantry() {
     };
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchField(e.target.value));
-    }
-
-    let pantryItemsList: PantryItemType[] = pantryItems;
-    if (searchField !== '') {
-        const lowerCaseSearchField = searchField.toLowerCase();
-        pantryItemsList = pantryItems.filter(item => item.name.toLowerCase().includes(lowerCaseSearchField));
     }
 
     let addButton: any = null;
