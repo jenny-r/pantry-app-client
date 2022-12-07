@@ -1,0 +1,76 @@
+.AddGroceryItem-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    width: 75%;
+    height: 200px;
+    position: fixed;
+    background: white;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.AddGroceryItem-input-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 70%;
+    width: 100%;
+}
+
+.AddGroceryItem-text-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    padding-left: 20px;
+}
+
+.AddGroceryItem-name,
+.AddGroceryItem-unit {
+    height: 32px;
+    width: 95%;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.AddGroceryItem-name {
+    margin-bottom: 20px;
+}
+
+.AddGroceryItem-quantity-input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 20%;
+}
+
+.AddGroceryItem-quantity {
+    height: 32px;
+    width: 32px;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.AddGroceryItem-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
+}
+
+.AddGroceryItem-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 34px;
+    width: 150px;
+    margin: 0 15px 0 15px;
+}
