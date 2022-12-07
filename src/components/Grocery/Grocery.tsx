@@ -68,7 +68,7 @@ export function Grocery() {
         dispatch(setSearchField(e.target.value));
     }
     const toggleGroceryCheck = (id: string, isChecked: boolean) => {
-        dispatch(toggleChecked({ [id]: isChecked }));
+        dispatch(toggleChecked({ id, isChecked }));
     }
 
     let addButton: any = null;

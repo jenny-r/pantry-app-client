@@ -90,10 +90,7 @@ export function GroceryItem({ item, onClickDeleteCheckbox, onChangeEditInput, on
     const groceryCheckboxClick = (cb: React.ChangeEvent<HTMLInputElement>) => {
         onClickGroceryCheckbox(item.id, cb.target.checked);
     }
-    let groceryCheckbox = (<input type='checkbox' className='GroceryItem-grocery-checkbox' onChange={groceryCheckboxClick} checked={false} />);
-    if (item.checked === true) {
-        groceryCheckbox = (<input type='checkbox' className='GroceryItem-grocery-checkbox' onChange={groceryCheckboxClick} checked />);
-    }
+    let groceryCheckbox = (<input type='checkbox' className='GroceryItem-grocery-checkbox' onChange={groceryCheckboxClick} checked={item.checked === true} />);
 
     return (
         <div className='GroceryItem-grocery-list-item'>

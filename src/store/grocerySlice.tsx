@@ -98,8 +98,8 @@ const grocerySlice = createSlice({
                 state.groceryItems[action.payload].quantity -= 1;
             }
         },
-        toggleChecked: (state, action: PayloadAction<{ [id: string]: boolean }>) => {
-            state.groceryItems[Object.keys(action.payload)[0]].checked = Object.values(action.payload)[0];
+        toggleChecked: (state, action: PayloadAction<{ id: string, isChecked: boolean }>) => {
+            state.groceryItems[action.payload.id].checked = action.payload.isChecked;
         },
         setSearchField: (state, action: PayloadAction<string>) => {
             state.searchField = action.payload;
