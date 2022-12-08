@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navigation } from '../components/Navigation/Navigation';
 import { Tabs } from '../components/Tabs/Tabs';
 import { Pantry } from '../components/Pantry/Pantry';
+import { Grocery } from '../components/Grocery/Grocery';
 import './App.css';
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
     )
   } else if (index === 1) {
     content = (
-      <h2>Groceries placeholder</h2>
+      <Grocery />
     )
   } else if (index === 2) {
     content = (

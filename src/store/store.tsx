@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import pantryReducer from './pantrySlice';
+import groceryReducer from './grocerySlice';
 
 const store = configureStore({
     reducer: {
         pantry: pantryReducer,
+        grocery: groceryReducer
     },
 })
 
