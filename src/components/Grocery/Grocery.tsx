@@ -125,8 +125,20 @@ export function Grocery() {
                 onSearchChange={handleSearchChange}
             />
             <div className='Grocery-grocery-item-list'>
-                {sortedGroceryItems.map((item) =>
-                    <GroceryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />)}
+                <div className='Grocery-grocery-item-unchecked-list'>
+                    {sortedGroceryItems.filter(item => item.checked === false).map((item) =>
+                        <GroceryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
+                    )}
+                </div>
+                <div className='Grocery-grocery-item-checked-list'>
+                    <div className='Grocery-checked-header'>
+                        <div>Checked Items</div>
+                        <div className='Grocery-add-to-pantry-button'>Add to Pantry</div>
+                    </div>
+                    {sortedGroceryItems.filter(item => item.checked === true).map((item) =>
+                        <GroceryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
+                    )}
+                </div>
             </div>
             {addButton}
             {deleteModeButtons}

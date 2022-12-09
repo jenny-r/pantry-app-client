@@ -5,7 +5,7 @@
 }
 
 .Grocery-grocery-item-list {
-    height: 42.5em;
+    height: 37em;
     /* flex: 1; */
     overflow: auto;
 }
@@ -25,4 +25,15 @@
     height: 34px;
     width: 150px;
     margin: 20px 15px;
+}
+
+.Grocery-grocery-item-checked-list {
+    margin-bottom: 75px;
+}
+
+.Grocery-checked-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 10px 0px 10px;
 }
