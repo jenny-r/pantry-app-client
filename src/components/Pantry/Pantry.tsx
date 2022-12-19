@@ -3,10 +3,11 @@ import { PantryItem } from '../PantryItem/PantryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryItemType, PantryMode, PantrySort } from '../../types/types';
-import { deletePantryItems, editPantryItems, changePantryMode, changePantrySort, setSearchField } from '../../store/pantrySlice';
+import { deletePantryItems, editPantryItems, changePantryMode, changePantrySort, setGroceryAdd, setSearchField } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddPantryItem } from '../AddPantryItem/AddPantryItem';
+import { AddGroceryItem } from '../AddGroceryItem/AddGroceryItem';
 import './Pantry.css';
 
 export function Pantry() {
@@ -17,6 +18,7 @@ export function Pantry() {
     const pantryItems: PantryItemType[] = useAppSelector((state) => Object.values(state.pantry.pantryItems));
     const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
     const pantrySort: PantrySort = useAppSelector((state) => state.pantry.pantrySort);
+    const groceryAdd: { name: string, unit: string } = useAppSelector((state) => state.pantry.groceryAdd);
     const searchField: string = useAppSelector((state) => state.pantry.searchField);
     const sortOptionNames: string[] = Object.values(PantrySort);
     const sortedPantryItems = useMemo(() => {
@@ -66,6 +68,18 @@ export function Pantry() {
     };
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchField(e.target.value));
+    }
+
+    const toggleGroceryItemDialogue = (itemName: string, itemUnit: string) => {
+        dispatch(setGroceryAdd({ name: itemName, unit: itemUnit }));
+        dispatch(changePantryMode(PantryMode.AddToGrocery));
+    }
+
+    let addGroceryItemDialogue: any = null;
+    if (pantryMode === PantryMode.AddToGrocery) {
+        addGroceryItemDialogue = (
+            <AddGroceryItem itemName={groceryAdd.name} itemUnit={groceryAdd.unit} />
+        )
     }
 
     let addButton: any = null;
@@ -123,12 +137,13 @@ export function Pantry() {
             />
             <div className='Pantry-pantry-item-list'>
                 {sortedPantryItems.map((item) =>
-                    <PantryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} />)}
+                    <PantryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickAddGroceryItem={toggleGroceryItemDialogue} />)}
             </div>
             {addButton}
             {deleteModeButtons}
             {editModeButtons}
             {addPantryItemDialogue}
+            {addGroceryItemDialogue}
         </div>
     )
 }

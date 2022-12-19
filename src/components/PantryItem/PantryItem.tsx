@@ -11,9 +11,10 @@ interface PantryItemProps {
     item: PantryItemType;
     onClickDeleteCheckbox: (id: string, isChecked: boolean) => void;
     onChangeEditInput: (pantryItem: PantryItemType) => void;
+    onClickAddGroceryItem: (itemName: string, itemUnit: string) => void;
 }
 
-export function PantryItem({ item, onClickDeleteCheckbox, onChangeEditInput }: PantryItemProps) {
+export function PantryItem({ item, onClickDeleteCheckbox, onChangeEditInput, onClickAddGroceryItem }: PantryItemProps) {
     const [editedName, setEditedName] = useState(item.name);
     const [editedUnit, setEditedUnit] = useState(item.unit);
     const [editedQuantity, setEditedQuantity] = useState(item.quantity);
@@ -118,7 +119,10 @@ export function PantryItem({ item, onClickDeleteCheckbox, onChangeEditInput }: P
                             />
                         </button>
                     </div>
-                    <button className='PantryItem-grocery-button'>
+                    <button
+                        className='PantryItem-grocery-button'
+                        onClick={() => onClickAddGroceryItem(item.name, item.unit)}
+                    >
                         <img src={groceryIcon} alt='add to grocery list' />
                     </button>
                 </div>

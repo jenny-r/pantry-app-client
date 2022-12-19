@@ -9,7 +9,8 @@ export enum PantryMode {
     Default,
     Edit,
     Delete,
-    Add
+    Add,
+    AddToGrocery
 }
 
 export enum PantrySort {
