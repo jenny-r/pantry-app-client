@@ -83,7 +83,7 @@ export function Grocery() {
     let addGroceryItemDialogue: any = null;
     if (groceryMode === GroceryMode.Add) {
         addGroceryItemDialogue = (
-            <AddGroceryItem />
+            <AddGroceryItem itemName={''} itemUnit={''} />
         )
     }
 

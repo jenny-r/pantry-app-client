@@ -5,7 +5,8 @@ interface PantryState {
     pantryItems: { [id: string]: PantryItemType },
     pantryMode: PantryMode,
     pantrySort: PantrySort,
-    searchField: string
+    searchField: string,
+    groceryAdd: { name: string, unit: string }
 }
 
 const initialState: PantryState = {
@@ -115,7 +116,11 @@ const initialState: PantryState = {
     },
     pantryMode: PantryMode.Default,
     pantrySort: PantrySort.Name,
-    searchField: ''
+    searchField: '',
+    groceryAdd: {
+        name: '',
+        unit: ''
+    }
 }
 
 const pantrySlice = createSlice({
@@ -151,12 +156,18 @@ const pantrySlice = createSlice({
                 state.pantryItems[action.payload].quantity -= 1;
             }
         },
+        setGroceryAdd: (state, action: PayloadAction<{ name: string, unit: string }>) => {
+            state.groceryAdd = {
+                name: action.payload.name,
+                unit: action.payload.unit
+            }
+        },
         setSearchField: (state, action: PayloadAction<string>) => {
             state.searchField = action.payload;
         }
     }
 })
 
-export const { addPantryItem, deletePantryItems, editPantryItems, changePantryMode, changePantrySort, increase, decrease, setSearchField } = pantrySlice.actions;
+export const { addPantryItem, deletePantryItems, editPantryItems, changePantryMode, changePantrySort, increase, decrease, setGroceryAdd, setSearchField } = pantrySlice.actions;
 
 export default pantrySlice.reducer;
