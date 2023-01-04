@@ -37,6 +37,7 @@ export function Pantry() {
 
     useEffect(() => {
         setDeleteList({});
+        setEditList({});
     }, [pantryMode]);
 
     const addToDeleteList = (id: string, isChecked: boolean) => {
@@ -51,7 +52,6 @@ export function Pantry() {
     const addToEditList = (pantryItem: PantryItemType) => {
         editList[pantryItem.id] = pantryItem;
         setEditList(editList);
-        console.log(editList)
     }
     const cancelMode = () => {
         dispatch(changePantryMode(PantryMode.Default));
@@ -137,7 +137,7 @@ export function Pantry() {
             />
             <div className='Pantry-pantry-item-list'>
                 {sortedPantryItems.map((item) =>
-                    <PantryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickAddGroceryItem={toggleGroceryItemDialogue} />)}
+                    <PantryItem item={item} key={item.name} deleteChecked={item.id in deleteList} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickAddGroceryItem={toggleGroceryItemDialogue} />)}
             </div>
             {addButton}
             {deleteModeButtons}

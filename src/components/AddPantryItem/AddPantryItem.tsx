@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, ButtonColor } from '../Button/Button';
 import { useAppDispatch } from '../../store/hooks';
-import { addPantryItem, changePantryMode } from '../../store/pantrySlice';
+import { addPantryItems, changePantryMode } from '../../store/pantrySlice';
 import { PantryMode } from '../../types/types';
 import './AddPantryItem.css';
 
@@ -24,12 +24,12 @@ export function AddPantryItem() {
 
     const addPantryItemModeChange = () => {
         if (name.length !== 0 && unit.length !== 0 && quantity.length !== 0) {
-            dispatch(addPantryItem({
+            dispatch(addPantryItems([{
                 id: '18',
                 name: name,
                 unit: unit,
                 quantity: Number(quantity)
-            }));
+            }]));
             dispatch(changePantryMode(PantryMode.Default));
         } else {
             alert('Please fill in required fields.');

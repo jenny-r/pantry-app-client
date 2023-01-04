@@ -2,9 +2,9 @@ import { useState, useEffect, useMemo } from 'react'
 import { GroceryItem } from '../GroceryItem/GroceryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { GroceryItemType, GroceryMode, GrocerySort } from '../../types/types';
+import { GroceryItemType, GroceryMode, GrocerySort, PantryItemType } from '../../types/types';
 import { deleteGroceryItems, editGroceryItems, changeGroceryMode, changeGrocerySort, toggleChecked, setSearchField } from '../../store/grocerySlice';
-import { addPantryItem } from '../../store/pantrySlice';
+import { addPantryItems } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddGroceryItem } from '../AddGroceryItem/AddGroceryItem';
@@ -37,6 +37,7 @@ export function Grocery() {
 
     useEffect(() => {
         setDeleteList({});
+        setEditList({});
     }, [groceryMode]);
 
     const addToDeleteList = (id: string, isChecked: boolean) => {
@@ -51,7 +52,6 @@ export function Grocery() {
     const addToEditList = (groceryItem: GroceryItemType) => {
         editList[groceryItem.id] = groceryItem;
         setEditList(editList);
-        console.log(editList)
     }
     const cancelMode = () => {
         dispatch(changeGroceryMode(GroceryMode.Default));
@@ -74,16 +74,16 @@ export function Grocery() {
     }
 
     const addToPantry = (checkedItems: GroceryItemType[]) => {
-        checkedItems.map((item) => {
-            dispatch(addPantryItem({
-                id: item.id,
-                name: item.name,
-                unit: item.unit,
-                quantity: item.quantity
-            }));
-            addToDeleteList(item.id, true);
-        });
-        dispatch(deleteGroceryItems(Object.keys(deleteList)));
+        const addToPantryList: PantryItemType[] = checkedItems.map((item) => ({
+            id: item.id,
+            name: item.name,
+            unit: item.unit,
+            quantity: item.quantity
+        }));
+        setDeleteList({})
+        setEditList({});
+        dispatch(addPantryItems(addToPantryList));
+        dispatch(deleteGroceryItems(checkedItems.map(item => item.id)));
     }
 
     let addButton: any = null;
@@ -142,7 +142,7 @@ export function Grocery() {
             <div className='Grocery-grocery-item-list'>
                 <div className='Grocery-grocery-item-unchecked-list'>
                     {sortedGroceryItems.filter(item => item.checked === false).map((item) =>
-                        <GroceryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
+                        <GroceryItem item={item} key={item.name} deleteChecked={item.id in deleteList} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
                     )}
                 </div>
                 <div className='Grocery-grocery-item-checked-list'>
@@ -151,7 +151,7 @@ export function Grocery() {
                         <div className='Grocery-add-to-pantry-button' onClick={() => addToPantry(sortedCheckedGroceryItems)}>Add to Pantry</div>
                     </div>
                     {sortedCheckedGroceryItems.map((item) =>
-                        <GroceryItem item={item} key={item.name} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
+                        <GroceryItem item={item} key={item.name} deleteChecked={item.id in deleteList} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
                     )}
                 </div>
             </div>
