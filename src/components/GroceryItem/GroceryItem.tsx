@@ -8,12 +8,13 @@ import './GroceryItem.css';
 
 interface GroceryItemProps {
     item: GroceryItemType;
+    deleteChecked: boolean;
     onClickDeleteCheckbox: (id: string, isChecked: boolean) => void;
     onChangeEditInput: (groceryItem: GroceryItemType) => void;
     onClickGroceryCheckbox: (id: string, isChecked: boolean) => void;
 }
 
-export function GroceryItem({ item, onClickDeleteCheckbox, onChangeEditInput, onClickGroceryCheckbox }: GroceryItemProps) {
+export function GroceryItem({ item, deleteChecked, onClickDeleteCheckbox, onChangeEditInput, onClickGroceryCheckbox }: GroceryItemProps) {
     const [editedName, setEditedName] = useState(item.name);
     const [editedUnit, setEditedUnit] = useState(item.unit);
     const [editedQuantity, setEditedQuantity] = useState(item.quantity);
@@ -64,13 +65,13 @@ export function GroceryItem({ item, onClickDeleteCheckbox, onChangeEditInput, on
                 <div className='GroceryItem-item-container'>
                     <div className='GroceryItem-container-left'>
                         <div className='GroceryItem-name-container-left'>
-                            <input className='GroceryItem-name-input' id='name' defaultValue={item.name} onChange={handleNameEdit} />
-                            <input className='GroceryItem-unit' id='unit' defaultValue={item.unit} onChange={handleUnitEdit} />
+                            <input className='GroceryItem-name-input' type="text" id='name' value={editedName} onChange={handleNameEdit} />
+                            <input className='GroceryItem-unit' type="text" id='unit' value={editedUnit} onChange={handleUnitEdit} />
                         </div>
                     </div>
                     <div className='GroceryItem-button-container-right'>
                         <div className='GroceryItem-count-container'>
-                            <input className='GroceryItem-quantity-input' id='quantity' defaultValue={item.quantity} onChange={handleQuantityEdit} />
+                            <input className='GroceryItem-quantity-input' type="text" id='quantity' value={editedQuantity} onChange={handleQuantityEdit} />
                         </div>
                     </div>
                 </div>
@@ -84,13 +85,13 @@ export function GroceryItem({ item, onClickDeleteCheckbox, onChangeEditInput, on
         const deleteCheckboxClick = (cb: React.ChangeEvent<HTMLInputElement>) => {
             onClickDeleteCheckbox(item.id, cb.target.checked);
         }
-        deleteCheckbox = (<input type='checkbox' className='GroceryItem-delete-checkbox' onChange={deleteCheckboxClick} />)
+        deleteCheckbox = (<input type='checkbox' className='GroceryItem-delete-checkbox' onChange={deleteCheckboxClick} checked={deleteChecked} />)
     }
 
     const groceryCheckboxClick = (cb: React.ChangeEvent<HTMLInputElement>) => {
         onClickGroceryCheckbox(item.id, cb.target.checked);
     }
-    let groceryCheckbox = (<input type='checkbox' className='GroceryItem-grocery-checkbox' onChange={groceryCheckboxClick} checked={item.checked === true} />);
+    let groceryCheckbox = (<input type='checkbox' className='GroceryItem-grocery-checkbox' onChange={groceryCheckboxClick} checked={item.checked} />);
 
     return (
         <div className='GroceryItem-grocery-list-item'>

@@ -13,14 +13,21 @@
     height: 70px;
 }
 
-.PantryItem-checkbox-container-left {
+.PantryItem-container-left {
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 50%;
+    height: 100%;
 }
 
-.PantryItem-checkbox {
+.PantryItem-delete-checkbox-container-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.PantryItem-delete-checkbox {
     height: 20px;
     width: 20px;
     margin: 0 15px 0 0;
