@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Signin } from '../components/Signin/Signin';
+import { Register } from '../components/Register/Register';
 import { Navigation } from '../components/Navigation/Navigation';
 import { Tabs } from '../components/Tabs/Tabs';
 import { Pantry } from '../components/Pantry/Pantry';
@@ -9,13 +10,18 @@ import './App.css';
 
 function App() {
   const [index, setIndex] = useState(0);
+  const [isSigningIn, setIsSigningIn] = useState(true);
   const accessToken = useAppSelector((state) => state.user.accessToken);
+
+  useEffect(() => {
+    setIsSigningIn(true);
+  }, [accessToken !== null]);
 
   const tabNames = ['Pantry', 'Groceries', 'Recipes'];
 
   let content = null;
   if (accessToken === null) {
-    content = <Signin />
+    content = (isSigningIn ? <Signin onRegisterClick={setIsSigningIn} /> : <Register onSigninClick={setIsSigningIn} />);
   } else {
     let tabContent = null;
     if (index === 0) {
