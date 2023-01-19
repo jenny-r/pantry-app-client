@@ -1,37 +1,50 @@
 import { useState } from 'react';
+import { Signin } from '../components/Signin/Signin';
 import { Navigation } from '../components/Navigation/Navigation';
 import { Tabs } from '../components/Tabs/Tabs';
 import { Pantry } from '../components/Pantry/Pantry';
 import { Grocery } from '../components/Grocery/Grocery';
+import { useAppSelector } from '../store/hooks';
 import './App.css';
 
 function App() {
   const [index, setIndex] = useState(0);
+  const accessToken = useAppSelector((state) => state.user.accessToken);
 
   const tabNames = ['Pantry', 'Groceries', 'Recipes'];
 
   let content = null;
-  if (index === 0) {
+  if (accessToken === null) {
+    content = <Signin />
+  } else {
+    let tabContent = null;
+    if (index === 0) {
+      tabContent = (
+        <Pantry />
+      )
+    } else if (index === 1) {
+      tabContent = (
+        <Grocery />
+      )
+    } else if (index === 2) {
+      tabContent = (
+        <h2>Recipes placeholder</h2>
+      )
+    }
     content = (
-      <Pantry />
-    )
-  } else if (index === 1) {
-    content = (
-      <Grocery />
-    )
-  } else if (index === 2) {
-    content = (
-      <h2>Recipes placeholder</h2>
+      <div>
+        <Tabs tabNames={tabNames} onTabSelect={setIndex} />
+        <div className='App-content'>
+          {tabContent}
+        </div>
+      </div>
     )
   }
 
   return (
     <div className='App'>
       <Navigation />
-      <Tabs tabNames={tabNames} onTabSelect={setIndex} />
-      <div className='App-content'>
-        {content}
-      </div>
+      {content}
     </div>
   );
 }
