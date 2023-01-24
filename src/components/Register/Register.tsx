@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { signIn } from '../../store/userSlice';
-import './Signin.css';
+import './Register.css';
 
-export function Signin({ onRegisterClick }: { onRegisterClick: (isSigningIn: boolean) => void }) {
+export function Register({ onSigninClick }: { onSigninClick: (isSigningIn: boolean) => void }) {
     const dispatch = useAppDispatch()
 
     const [email, setEmail] = useState('');
@@ -24,18 +24,18 @@ export function Signin({ onRegisterClick }: { onRegisterClick: (isSigningIn: boo
     }
 
     return (
-        <div className='Signin-signin'>
-            <div className='Signin-form' onKeyDown={handleKeyPress}>
-                <div className='Signin-header'>Sign In</div>
+        <div className='Register-register'>
+            <div className='Register-form' onKeyDown={handleKeyPress}>
+                <div className='Register-header'>Register</div>
 
                 <label htmlFor='email-address'>Email</label>
-                <input className='Signin-input' type='email' placeholder='Email' id='email-address' onChange={handleEmailChange} />
+                <input className='Register-input' type='email' placeholder='Email' id='email-address' onChange={handleEmailChange} />
 
                 <label htmlFor='password'>Password</label>
-                <input className='Signin-input' type='password' placeholder='Password' id='password' onChange={handlePasswordChange} />
+                <input className='Register-input' type='password' placeholder='Password' id='password' onChange={handlePasswordChange} />
 
-                <button className='Signin-button' onClick={() => dispatch(signIn({ email, password }))}>Sign In</button>
-                <div className='Signin-register-link' onClick={() => onRegisterClick(false)}>Register</div>
+                <button className='Register-button' onClick={() => dispatch(signIn({ email, password }))}>Register</button>
+                <div className='Register-signin-link' onClick={() => onSigninClick(true)}>Sign In</div>
             </div>
         </div>
     )

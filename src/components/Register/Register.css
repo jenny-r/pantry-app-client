@@ -1,0 +1,65 @@
+.Register-register {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: rgba(208, 247, 232, 0.842);
+}
+
+.Register-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 300px;
+    width: 275px;
+    background: white;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(8, 7, 16, 0.4);
+    padding: 10px 10px;
+    margin-top: 125px;
+}
+
+.Register-header {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 10px 15px 10px;
+}
+
+label {
+    display: block;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.Register-input {
+    display: block;
+    height: 20px;
+    width: 80%;
+    background-color: white;
+    border-radius: 1px;
+    font-size: 14px;
+    border-width: 1px;
+}
+
+.Register-button {
+    margin-top: 30px;
+    height: 15%;
+    width: 35%;
+    background-color: rgb(211, 247, 253);
+    font-size: 16px;
+    font-weight: 600;
+    border-width: 1px;
+    border-radius: 5px;
+}
+
+.Register-signin-link {
+    margin-top: 20px;
+    text-decoration: underline;
+}
