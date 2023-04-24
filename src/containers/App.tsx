@@ -21,30 +21,26 @@ function App() {
 
   let content = null;
   if (accessToken === null) {
-    content = (isSigningIn ? <Signin onRegisterClick={setIsSigningIn} /> : <Register onSigninClick={setIsSigningIn} />);
+    content = isSigningIn ? (
+      <Signin onRegisterClick={setIsSigningIn} />
+    ) : (
+      <Register onSigninClick={setIsSigningIn} />
+    );
   } else {
     let tabContent = null;
     if (index === 0) {
-      tabContent = (
-        <Pantry />
-      )
+      tabContent = <Pantry />;
     } else if (index === 1) {
-      tabContent = (
-        <Grocery />
-      )
+      tabContent = <Grocery />;
     } else if (index === 2) {
-      tabContent = (
-        <h2>Recipes placeholder</h2>
-      )
+      tabContent = <h2>Recipes placeholder</h2>;
     }
     content = (
       <div>
         <Tabs tabNames={tabNames} onTabSelect={setIndex} />
-        <div className='App-content'>
-          {tabContent}
-        </div>
+        <div className='App-content'>{tabContent}</div>
       </div>
-    )
+    );
   }
 
   return (
