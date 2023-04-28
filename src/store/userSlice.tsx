@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const { REACT_APP_SERVICE_URL } = process.env;
+
 interface UserState {
     accessToken: string | null;
 }
@@ -26,7 +28,7 @@ export const { signInSuccess, signOut } = userSlice.actions;
 
 export async function signIn(email: string, password: string) {
     return await axios.post(
-        `http://localhost:3001/login`, 
+        `${REACT_APP_SERVICE_URL}/login`, 
         {
             data: { email, password }
         }
@@ -35,7 +37,7 @@ export async function signIn(email: string, password: string) {
 
 export async function register(email: string, password: string) {
     return await axios.post(
-        `http://localhost:3001/register`, 
+        `${REACT_APP_SERVICE_URL}/register`, 
         {
             data: { email, password }
         }

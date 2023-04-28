@@ -23,7 +23,7 @@ export function Register({ onSigninClick }: { onSigninClick: (isSigningIn: boole
         register(email, password)
             .then((response) => {
                 if (response.data.status === true) {
-                    dispatch(signInSuccess(response.data.data.accessToken));
+                    dispatch(signInSuccess(response.data.accessToken));
                     setIsRegisterFail(false);
                     setErrorMessage('');
                 } else {
