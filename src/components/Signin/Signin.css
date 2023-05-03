@@ -13,7 +13,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 300px;
+    height: 330px;
     width: 275px;
     background: white;
     border-radius: 10px;
@@ -28,7 +28,16 @@
     font-size: 22px;
     font-weight: bold;
     text-align: center;
-    padding: 10px 10px 15px 10px;
+    padding: 10px;
+}
+
+.Signin-fail {
+    background: #fff1f1;
+    color: #ff6161;
+    border: 1px solid #ff6161;
+    border-radius: 5px;
+    padding: 5px 25px;
+    margin-bottom: 6px;
 }
 
 label {
@@ -49,7 +58,7 @@ label {
 }
 
 .Signin-button {
-    margin-top: 30px;
+    margin-top: 20px;
     height: 15%;
     width: 35%;
     background-color: rgb(211, 247, 253);
