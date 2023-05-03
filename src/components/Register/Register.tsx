@@ -28,16 +28,12 @@ export function Register({ onSigninClick }: { onSigninClick: (isSigningIn: boole
                     setErrorMessage('');
                 } else {
                     setIsRegisterFail(true);
-                    const temp = [];
-                    for (let i = 0; i < response.data.error.issues.length; i++) {
-                        temp.push(response.data.error.issues[i].message);
-                    }
-                    setErrorMessage(temp.join(', '));
+                    setErrorMessage(response.data.error);
                 }
             })
-            .catch((error) => {
+            .catch(() => {
                 setIsRegisterFail(true);
-                setErrorMessage(error.response.data);
+                setErrorMessage('please try again later');
             })
     }
 
