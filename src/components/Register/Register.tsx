@@ -4,7 +4,7 @@ import { register, signInSuccess } from '../../store/userSlice';
 import './Register.css';
 
 export function Register({ onSigninClick }: { onSigninClick: (isSigningIn: boolean) => void }) {
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,59 +13,73 @@ export function Register({ onSigninClick }: { onSigninClick: (isSigningIn: boole
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value.toLowerCase());
-    }
+    };
 
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
-    }
+    };
 
     const handleRegister = (email: string, password: string) => {
-        register(email, password)
+        register({ email, password })
             .then((response) => {
-                if (response.data.status === true) {
-                    dispatch(signInSuccess(response.data.accessToken));
+                if (response.status === true) {
+                    dispatch(signInSuccess(response.accessToken));
                     setIsRegisterFail(false);
                     setErrorMessage('');
                 } else {
                     setIsRegisterFail(true);
-                    setErrorMessage(response.data.error);
+                    setErrorMessage(response.error);
                 }
             })
             .catch(() => {
                 setIsRegisterFail(true);
                 setErrorMessage('please try again later');
-            })
-    }
+            });
+    };
 
     const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Enter') {
             handleRegister(email, password);
         }
-    }
+    };
 
     let invalidRegisterDialogue: any = null;
     if (isRegisterFail) {
-        invalidRegisterDialogue = (
-            <div className='Register-fail'>Unable to register: {errorMessage}</div>
-        )
+        invalidRegisterDialogue = <div className="Register-fail">Unable to register: {errorMessage}</div>;
     }
 
     return (
-        <div className='Register-register'>
-            <div className='Register-form' onKeyDown={handleKeyPress}>
-                <div className='Register-header'>Register</div>
+        <div className="Register-register">
+            <div className="Register-form" onKeyDown={handleKeyPress}>
+                <div className="Register-header">Register</div>
 
                 {invalidRegisterDialogue}
 
-                <label htmlFor='email-address'>Email</label>
-                <input className='Register-input' type='email' placeholder='Email' id='email-address' onChange={handleEmailChange} />
+                <label htmlFor="email-address">Email</label>
+                <input
+                    className="Register-input"
+                    type="email"
+                    placeholder="Email"
+                    id="email-address"
+                    onChange={handleEmailChange}
+                />
 
-                <label htmlFor='password'>Password</label>
-                <input className='Register-input' type='password' placeholder='Password' id='password' onChange={handlePasswordChange} />
+                <label htmlFor="password">Password</label>
+                <input
+                    className="Register-input"
+                    type="password"
+                    placeholder="Password"
+                    id="password"
+                    onChange={handlePasswordChange}
+                />
 
-                <button className='Register-button' onClick={() => handleRegister(email, password)}>Register</button>
-                <div className='Register-signin-link' onClick={() => onSigninClick(true)}>Sign In</div>
+                <button className="Register-button" onClick={() => handleRegister(email, password)}>
+                    Register
+                </button>
+                <div className="Register-signin-link" onClick={() => onSigninClick(true)}>
+                    Sign In
+                </div>
             </div>
         </div>
-    )
+    );
 }
