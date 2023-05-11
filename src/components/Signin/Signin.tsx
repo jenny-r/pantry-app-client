@@ -19,7 +19,7 @@ export function Signin({ onRegisterClick }: { onRegisterClick: (isSigningIn: boo
     };
 
     const handleSignIn = (email: string, password: string) => {
-        signIn({ email, password })
+        signIn(email, password)
             .then((response) => {
                 dispatch(signInSuccess(response.accessToken));
                 setIsSignInFail(false);

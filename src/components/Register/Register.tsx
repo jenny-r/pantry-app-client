@@ -20,7 +20,7 @@ export function Register({ onSigninClick }: { onSigninClick: (isSigningIn: boole
     };
 
     const handleRegister = (email: string, password: string) => {
-        register({ email, password })
+        register(email, password)
             .then((response) => {
                 if (response.status === true) {
                     dispatch(signInSuccess(response.accessToken));

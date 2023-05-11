@@ -1,13 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import {
-    LoginRequestSchema,
-    LoginResponse,
-    LoginResponseSchema,
-    RegisterRequestSchema,
-    RegisterResponse,
-    RegisterResponseSchema,
-} from '../types/api-types';
+import { LoginResponse, LoginResponseSchema, RegisterResponse, RegisterResponseSchema } from '../types/api-types';
 
 const { REACT_APP_SERVICE_URL } = process.env;
 
@@ -34,20 +27,16 @@ const userSlice = createSlice({
 
 export const { signInSuccess, signOut } = userSlice.actions;
 
-export async function signIn(input: any): Promise<LoginResponse> {
-    const request = LoginRequestSchema.parse(input);
-
+export async function signIn(email: string, password: string): Promise<LoginResponse> {
     const response = await axios.post(`${REACT_APP_SERVICE_URL}/login`, {
-        data: request,
+        data: { email, password },
     });
     return LoginResponseSchema.parse(response.data);
 }
 
-export async function register(input: any): Promise<RegisterResponse> {
-    const request = RegisterRequestSchema.parse(input);
-
+export async function register(email: string, password: string): Promise<RegisterResponse> {
     const response = await axios.post(`${REACT_APP_SERVICE_URL}/register`, {
-        data: request,
+        data: { email, password },
     });
     return RegisterResponseSchema.parse(response.data);
 }
