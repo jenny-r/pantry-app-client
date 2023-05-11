@@ -1,0 +1,10 @@
+{
+      "tabWidth": 4,
+      "trailingComma": "all",
+      "singleQuote": true,
+      "semi": true,
+      "importOrder": ["^[./]"],
+      "importOrderSeparation": false,
+      "importOrderSortSpecifiers": true,
+      "printWidth": 120
+}
