@@ -37,17 +37,15 @@ export function AddGroceryItem({ itemName, itemUnit }: AddGroceryItemProps) {
         }
         if (pantryMode === PantryMode.AddToGrocery) {
             dispatch(changePantryMode(PantryMode.Default));
-            dispatch(setGroceryAdd({ name: '', unit: '' }));
+            dispatch(setGroceryAdd({ itemName: '', itemUnit: '' }));
         }
     }
     const addGroceryItemModeChange = () => {
         if (name.length !== 0 && unit.length !== 0 && quantity.length !== 0) {
             dispatch(addGroceryItem({
-                id: '8',
-                name: name,
-                unit: unit,
-                quantity: Number(quantity),
-                checked: false
+                itemName: name,
+                itemUnit: unit,
+                quantity: Number(quantity)
             }));
             handleModeChange();
         } else {

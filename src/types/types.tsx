@@ -1,10 +1,3 @@
-export interface PantryItemType {
-    id: string;
-    name: string;
-    unit: string;
-    quantity: number;
-}
-
 export enum PantryMode {
     Default,
     Edit,
@@ -16,14 +9,6 @@ export enum PantryMode {
 export enum PantrySort {
     Name = 'Name',
     Quantity = 'Quantity'
-}
-
-export interface GroceryItemType {
-    id: string;
-    name: string;
-    unit: string;
-    quantity: number;
-    checked: boolean;
 }
 
 export enum GroceryMode {

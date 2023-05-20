@@ -2,7 +2,8 @@ import { useState, useEffect, useMemo } from 'react'
 import { GroceryItem } from '../GroceryItem/GroceryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { GroceryItemType, GroceryMode, GrocerySort, PantryItemType } from '../../types/types';
+import { GroceryMode, GrocerySort } from '../../types/types';
+import { GroceryItemType, PantryItemType } from '../../types/api-types';
 import { deleteGroceryItems, editGroceryItems, changeGroceryMode, changeGrocerySort, toggleChecked, setSearchField } from '../../store/grocerySlice';
 import { addPantryItems } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
@@ -23,13 +24,13 @@ export function Grocery() {
     const sortedGroceryItems = useMemo(() => {
         let temp: GroceryItemType[] = [...groceryItems];
         if (grocerySort === GrocerySort.Name) {
-            temp.sort((a, b) => a.name.localeCompare(b.name));
+            temp.sort((a, b) => a.itemName.localeCompare(b.itemName));
         } else if (grocerySort === GrocerySort.Quantity) {
             temp.sort((n1, n2) => n1.quantity - n2.quantity);
         }
         if (searchField !== '') {
             const lowerCaseSearchField = searchField.toLowerCase();
-            temp = temp.filter(item => item.name.toLowerCase().includes(lowerCaseSearchField));
+            temp = temp.filter(item => item.itemName.toLowerCase().includes(lowerCaseSearchField));
         }
         return temp;
     }, [groceryItems, grocerySort, searchField])
@@ -76,9 +77,11 @@ export function Grocery() {
     const addToPantry = (checkedItems: GroceryItemType[]) => {
         const addToPantryList: PantryItemType[] = checkedItems.map((item) => ({
             id: item.id,
-            name: item.name,
-            unit: item.unit,
-            quantity: item.quantity
+            userId: item.userId,
+            itemName: item.itemName,
+            itemUnit: item.itemUnit,
+            quantity: item.quantity,
+            updatedAt: item.updatedAt
         }));
         setDeleteList({})
         setEditList({});
@@ -142,7 +145,7 @@ export function Grocery() {
             <div className='Grocery-grocery-item-list'>
                 <div className='Grocery-grocery-item-unchecked-list'>
                     {sortedGroceryItems.filter(item => item.checked === false).map((item) =>
-                        <GroceryItem item={item} key={item.name} deleteChecked={item.id in deleteList} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
+                        <GroceryItem item={item} key={item.itemName} deleteChecked={item.id in deleteList} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
                     )}
                 </div>
                 <div className='Grocery-grocery-item-checked-list'>
@@ -151,7 +154,7 @@ export function Grocery() {
                         <div className='Grocery-add-to-pantry-button' onClick={() => addToPantry(sortedCheckedGroceryItems)}>Add to Pantry</div>
                     </div>
                     {sortedCheckedGroceryItems.map((item) =>
-                        <GroceryItem item={item} key={item.name} deleteChecked={item.id in deleteList} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
+                        <GroceryItem item={item} key={item.itemName} deleteChecked={item.id in deleteList} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
                     )}
                 </div>
             </div>

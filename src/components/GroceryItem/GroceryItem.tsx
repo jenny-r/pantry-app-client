@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import decreaseIcon from '../../assets/minus-icon.png';
 import increaseIcon from '../../assets/plus-icon.png';
-import { GroceryMode, GroceryItemType } from '../../types/types';
+import { GroceryMode } from '../../types/types';
+import { GroceryItemType } from '../../types/api-types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { increase, decrease } from '../../store/grocerySlice';
 import './GroceryItem.css';
@@ -15,8 +16,8 @@ interface GroceryItemProps {
 }
 
 export function GroceryItem({ item, deleteChecked, onClickDeleteCheckbox, onChangeEditInput, onClickGroceryCheckbox }: GroceryItemProps) {
-    const [editedName, setEditedName] = useState(item.name);
-    const [editedUnit, setEditedUnit] = useState(item.unit);
+    const [editedName, setEditedName] = useState(item.itemName);
+    const [editedUnit, setEditedUnit] = useState(item.itemUnit);
     const [editedQuantity, setEditedQuantity] = useState(item.quantity);
 
     const dispatch = useAppDispatch();
@@ -29,10 +30,12 @@ export function GroceryItem({ item, deleteChecked, onClickDeleteCheckbox, onChan
             onChangeEditInput(
                 {
                     id: item.id,
-                    name: event.target.value,
-                    unit: editedUnit,
+                    userId: item.userId,
+                    itemName: event.target.value,
+                    itemUnit: editedUnit,
                     quantity: editedQuantity,
-                    checked: item.checked
+                    checked: item.checked,
+                    updatedAt: item.updatedAt
                 }
             )
         }
@@ -41,10 +44,12 @@ export function GroceryItem({ item, deleteChecked, onClickDeleteCheckbox, onChan
             onChangeEditInput(
                 {
                     id: item.id,
-                    name: editedName,
-                    unit: event.target.value,
+                    userId: item.userId,
+                    itemName: editedName,
+                    itemUnit: event.target.value,
                     quantity: editedQuantity,
-                    checked: item.checked
+                    checked: item.checked,
+                    updatedAt: item.updatedAt
                 }
             )
         }
@@ -53,10 +58,12 @@ export function GroceryItem({ item, deleteChecked, onClickDeleteCheckbox, onChan
             onChangeEditInput(
                 {
                     id: item.id,
-                    name: editedName,
-                    unit: editedUnit,
+                    userId: item.userId,
+                    itemName: editedName,
+                    itemUnit: editedUnit,
                     quantity: Number(event.target.value),
-                    checked: item.checked
+                    checked: item.checked,
+                    updatedAt: item.updatedAt
                 }
             )
         }
@@ -101,8 +108,8 @@ export function GroceryItem({ item, deleteChecked, onClickDeleteCheckbox, onChan
                         {deleteCheckbox}
                     </div>
                     <div className='GroceryItem-name-container-left'>
-                        <h3 className='GroceryItem-name'>{item.name}</h3>
-                        <p className='GroceryItem-unit'>{item.unit}</p>
+                        <h3 className='GroceryItem-name'>{item.itemName}</h3>
+                        <p className='GroceryItem-unit'>{item.itemUnit}</p>
                     </div>
                 </div>
                 <div className='GroceryItem-button-container-right'>
