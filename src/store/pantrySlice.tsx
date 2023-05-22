@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PantryMode, PantrySort } from '../types/types';
-import { AddPantryItemType, LoadAllResponse, LoadAllResponseSchema, PantryItemType } from '../types/api-types';
-import axios from 'axios';
-
-const { REACT_APP_SERVICE_URL } = process.env;
+import { AddPantryItemType, PantryMode, PantrySort } from '../types/types';
+import { PantryItemType } from '../types/api-types';
 
 interface PantryState {
     pantryItems: { [id: string]: PantryItemType };
@@ -86,19 +83,5 @@ export const {
     setGroceryAdd,
     setSearchField,
 } = pantrySlice.actions;
-
-export async function loadAllItems(accessToken: string): Promise<LoadAllResponse> {
-    const response = await axios.post(`${REACT_APP_SERVICE_URL}/loadAll`, {
-        data: { accessToken },
-    });
-    return LoadAllResponseSchema.parse(response.data);
-}
-
-export async function callAddPantryItems(accessToken: string): Promise<LoadAllResponse> {
-    const response = await axios.post(`${REACT_APP_SERVICE_URL}/loadAll`, {
-        data: { accessToken },
-    });
-    return LoadAllResponseSchema.parse(response.data);
-}
 
 export default pantrySlice.reducer;

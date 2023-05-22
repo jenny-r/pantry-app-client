@@ -10,13 +10,6 @@ export const PantryItemSchema = z.object({
 });
 export type PantryItemType = z.infer<typeof PantryItemSchema>;
 
-export const AddPantryItemSchema = z.object({
-    itemName: z.string(),
-    itemUnit: z.string(),
-    quantity: z.number().gt(0),
-});
-export type AddPantryItemType = z.infer<typeof AddPantryItemSchema>;
-
 export const GroceryItemSchema = z.object({
     id: z.string(),
     userId: z.string(),
@@ -27,13 +20,6 @@ export const GroceryItemSchema = z.object({
     updatedAt: z.number(),
 });
 export type GroceryItemType = z.infer<typeof GroceryItemSchema>;
-
-export const AddGroceryItemSchema = z.object({
-    itemName: z.string(),
-    itemUnit: z.string(),
-    quantity: z.number().gt(0),
-});
-export type AddGroceryItemType = z.infer<typeof AddGroceryItemSchema>;
 
 // Login Response
 export const LoginResponseSchema = z.object({

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GroceryMode, GrocerySort } from '../types/types';
-import { AddGroceryItemType, GroceryItemType } from '../types/api-types';
+import { AddGroceryItemType, GroceryMode, GrocerySort } from '../types/types';
+import { GroceryItemType } from '../types/api-types';
 
 interface GroceryState {
     groceryItems: { [id: string]: GroceryItemType };
