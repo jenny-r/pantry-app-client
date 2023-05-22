@@ -25,9 +25,8 @@ export function AddPantryItem() {
     const addPantryItemModeChange = () => {
         if (name.length !== 0 && unit.length !== 0 && quantity.length !== 0) {
             dispatch(addPantryItems([{
-                id: '18',
-                name: name,
-                unit: unit,
+                itemName: name,
+                itemUnit: unit,
                 quantity: Number(quantity)
             }]));
             dispatch(changePantryMode(PantryMode.Default));

@@ -1,76 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GroceryItemType, GroceryMode, GrocerySort } from '../types/types';
+import { AddGroceryItemType, GroceryMode, GrocerySort } from '../types/types';
+import { GroceryItemType } from '../types/api-types';
 
 interface GroceryState {
-    groceryItems: { [id: string]: GroceryItemType },
-    groceryMode: GroceryMode,
-    grocerySort: GrocerySort,
-    searchField: string
+    groceryItems: { [id: string]: GroceryItemType };
+    groceryMode: GroceryMode;
+    grocerySort: GrocerySort;
+    searchField: string;
 }
 
 const initialState: GroceryState = {
-    groceryItems: {
-        '1': {
-            id: '1',
-            name: 'Milk',
-            unit: 'Carton',
-            quantity: 2,
-            checked: false
-        },
-        '2': {
-            id: '2',
-            name: 'Banana',
-            unit: 'Single',
-            quantity: 1,
-            checked: false
-        },
-        '3': {
-            id: '3',
-            name: 'Tuna',
-            unit: 'Can',
-            quantity: 3,
-            checked: false
-        },
-        '4': {
-            id: '4',
-            name: 'Bread',
-            unit: 'Loaf',
-            quantity: 1,
-            checked: false
-        },
-        '5': {
-            id: '5',
-            name: 'Orange juice',
-            unit: 'Carton',
-            quantity: 1,
-            checked: false
-        },
-        '6': {
-            id: '6',
-            name: 'Bacon',
-            unit: 'Package',
-            quantity: 1,
-            checked: false
-        },
-        '7': {
-            id: '7',
-            name: 'Potato',
-            unit: 'Single',
-            quantity: 6,
-            checked: false
-        }
-    },
+    groceryItems: {},
     groceryMode: GroceryMode.Default,
     grocerySort: GrocerySort.Name,
-    searchField: ''
-}
+    searchField: '',
+};
 
 const grocerySlice = createSlice({
     name: 'grocery',
     initialState,
     reducers: {
-        addGroceryItem: (state, action: PayloadAction<GroceryItemType>) => {
-            state.groceryItems[Object.keys(state.groceryItems).length + 1] = action.payload;
+        setGroceryState: (state, action: PayloadAction<{ [id: string]: GroceryItemType }>) => {
+            state.groceryItems = action.payload;
+        },
+        addGroceryItem: (state, action: PayloadAction<AddGroceryItemType>) => {
+            // state.groceryItems[Object.keys(state.groceryItems).length + 1] = action.payload;
         },
         deleteGroceryItems: (state, action: PayloadAction<string[]>) => {
             for (let i = 0; i < action.payload.length; i++) {
@@ -98,15 +52,26 @@ const grocerySlice = createSlice({
                 state.groceryItems[action.payload].quantity -= 1;
             }
         },
-        toggleChecked: (state, action: PayloadAction<{ id: string, isChecked: boolean }>) => {
+        toggleChecked: (state, action: PayloadAction<{ id: string; isChecked: boolean }>) => {
             state.groceryItems[action.payload.id].checked = action.payload.isChecked;
         },
         setSearchField: (state, action: PayloadAction<string>) => {
             state.searchField = action.payload;
-        }
-    }
-})
+        },
+    },
+});
 
-export const { addGroceryItem, deleteGroceryItems, editGroceryItems, changeGroceryMode, changeGrocerySort, increase, decrease, toggleChecked, setSearchField } = grocerySlice.actions;
+export const {
+    setGroceryState,
+    addGroceryItem,
+    deleteGroceryItems,
+    editGroceryItems,
+    changeGroceryMode,
+    changeGrocerySort,
+    increase,
+    decrease,
+    toggleChecked,
+    setSearchField,
+} = grocerySlice.actions;
 
 export default grocerySlice.reducer;

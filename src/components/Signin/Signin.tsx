@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../store/hooks';
-import { signIn, signInSuccess } from '../../store/userSlice';
+import { signIn } from '../../api';
+import { onSignInSuccess } from '../../store/userSlice';
 import './Signin.css';
 
 export function Signin({ onRegisterClick }: { onRegisterClick: (isSigningIn: boolean) => void }) {
@@ -21,7 +22,7 @@ export function Signin({ onRegisterClick }: { onRegisterClick: (isSigningIn: boo
     const handleSignIn = (email: string, password: string) => {
         signIn(email, password)
             .then((response) => {
-                dispatch(signInSuccess(response.accessToken));
+                dispatch(onSignInSuccess(response.accessToken));
                 setIsSignInFail(false);
             })
             .catch((err) => {

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { LoginResponse, LoginResponseSchema, RegisterResponse, RegisterResponseSchema } from '../types/api-types';
-
-const { REACT_APP_SERVICE_URL } = process.env;
+import { AppDispatch } from './store';
+import { loadAllItems } from '../api';
+import { setPantryState } from './pantrySlice';
+import { setGroceryState } from './grocerySlice';
 
 interface UserState {
     accessToken: string | null;
@@ -27,18 +27,22 @@ const userSlice = createSlice({
 
 export const { signInSuccess, signOut } = userSlice.actions;
 
-export async function signIn(email: string, password: string): Promise<LoginResponse> {
-    const response = await axios.post(`${REACT_APP_SERVICE_URL}/login`, {
-        data: { email, password },
-    });
-    return LoginResponseSchema.parse(response.data);
+export function onSignInSuccess(accessToken: string) {
+    return (dispatch: AppDispatch) => {
+        dispatch(signInSuccess(accessToken));
+        loadAllItems(accessToken).then((response) => {
+            dispatch(setPantryState(response.pantryItems));
+            dispatch(setGroceryState(response.groceryItems));
+        });
+    };
 }
 
-export async function register(email: string, password: string): Promise<RegisterResponse> {
-    const response = await axios.post(`${REACT_APP_SERVICE_URL}/register`, {
-        data: { email, password },
-    });
-    return RegisterResponseSchema.parse(response.data);
+export function onSignOut() {
+    return (dispatch: AppDispatch) => {
+        dispatch(signOut());
+        dispatch(setPantryState({}));
+        dispatch(setGroceryState({}));
+    };
 }
 
 export default userSlice.reducer;

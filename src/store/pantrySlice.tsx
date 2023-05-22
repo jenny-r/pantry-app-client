@@ -1,136 +1,37 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PantryItemType, PantryMode, PantrySort } from '../types/types';
+import { AddPantryItemType, PantryMode, PantrySort } from '../types/types';
+import { PantryItemType } from '../types/api-types';
 
 interface PantryState {
-    pantryItems: { [id: string]: PantryItemType },
-    pantryMode: PantryMode,
-    pantrySort: PantrySort,
-    searchField: string,
-    groceryAdd: { name: string, unit: string }
+    pantryItems: { [id: string]: PantryItemType };
+    pantryMode: PantryMode;
+    pantrySort: PantrySort;
+    searchField: string;
+    groceryAdd: { itemName: string; itemUnit: string };
 }
 
 const initialState: PantryState = {
-    pantryItems: {
-        '1': {
-            id: '1',
-            name: 'Milk',
-            unit: 'Carton',
-            quantity: 2
-        },
-        '2': {
-            id: '2',
-            name: 'Banana',
-            unit: 'Single',
-            quantity: 1
-        },
-        '3': {
-            id: '3',
-            name: 'Tuna',
-            unit: 'Can',
-            quantity: 3
-        },
-        '4': {
-            id: '4',
-            name: 'Bread',
-            unit: 'Loaf',
-            quantity: 1
-        },
-        '5': {
-            id: '5',
-            name: 'Orange juice',
-            unit: 'Carton',
-            quantity: 1
-        },
-        '6': {
-            id: '6',
-            name: 'Bacon',
-            unit: 'Package',
-            quantity: 1
-        },
-        '7': {
-            id: '7',
-            name: 'Potato',
-            unit: 'Single',
-            quantity: 6
-        },
-        '8': {
-            id: '8',
-            name: 'Flour',
-            unit: 'Container',
-            quantity: 1
-        },
-        '9': {
-            id: '9',
-            name: 'Apple',
-            unit: 'Single',
-            quantity: 3
-        },
-        '10': {
-            id: '10',
-            name: 'Peanuts',
-            unit: 'Pack',
-            quantity: 1
-        },
-        '11': {
-            id: '11',
-            name: 'Fruit snacks',
-            unit: 'Single',
-            quantity: 10
-        },
-        '12': {
-            id: '12',
-            name: 'Beans',
-            unit: 'Can',
-            quantity: 4
-        },
-        '13': {
-            id: '13',
-            name: 'Olives',
-            unit: 'Jar',
-            quantity: 1
-        },
-        '14': {
-            id: '14',
-            name: 'Rice',
-            unit: 'Pack',
-            quantity: 1
-        },
-        '15': {
-            id: '15',
-            name: 'Sugar',
-            unit: 'Container',
-            quantity: 1
-        },
-        '16': {
-            id: '16',
-            name: 'Vanilla extract',
-            unit: 'Bottle',
-            quantity: 1
-        },
-        '17': {
-            id: '17',
-            name: 'Carrot',
-            unit: 'Single',
-            quantity: 4
-        }
-    },
+    pantryItems: {},
     pantryMode: PantryMode.Default,
     pantrySort: PantrySort.Name,
     searchField: '',
     groceryAdd: {
-        name: '',
-        unit: ''
-    }
-}
+        itemName: '',
+        itemUnit: '',
+    },
+};
 
 const pantrySlice = createSlice({
     name: 'pantry',
     initialState,
     reducers: {
-        addPantryItems: (state, action: PayloadAction<PantryItemType[]>) => {
-            action.payload.forEach(item => {
-                state.pantryItems['id' + Math.random()] = item;
-            });
+        setPantryState: (state, action: PayloadAction<{ [id: string]: PantryItemType }>) => {
+            state.pantryItems = action.payload;
+        },
+        addPantryItems: (state, action: PayloadAction<AddPantryItemType[]>) => {
+            // action.payload.forEach((item) => {
+            //     state.pantryItems['id' + Math.random()] = item;
+            // });
         },
         deletePantryItems: (state, action: PayloadAction<string[]>) => {
             for (let i = 0; i < action.payload.length; i++) {
@@ -158,18 +59,29 @@ const pantrySlice = createSlice({
                 state.pantryItems[action.payload].quantity -= 1;
             }
         },
-        setGroceryAdd: (state, action: PayloadAction<{ name: string, unit: string }>) => {
+        setGroceryAdd: (state, action: PayloadAction<{ itemName: string; itemUnit: string }>) => {
             state.groceryAdd = {
-                name: action.payload.name,
-                unit: action.payload.unit
-            }
+                itemName: action.payload.itemName,
+                itemUnit: action.payload.itemUnit,
+            };
         },
         setSearchField: (state, action: PayloadAction<string>) => {
             state.searchField = action.payload;
-        }
-    }
-})
+        },
+    },
+});
 
-export const { addPantryItems, deletePantryItems, editPantryItems, changePantryMode, changePantrySort, increase, decrease, setGroceryAdd, setSearchField } = pantrySlice.actions;
+export const {
+    setPantryState,
+    addPantryItems,
+    deletePantryItems,
+    editPantryItems,
+    changePantryMode,
+    changePantrySort,
+    increase,
+    decrease,
+    setGroceryAdd,
+    setSearchField,
+} = pantrySlice.actions;
 
 export default pantrySlice.reducer;

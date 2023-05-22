@@ -1,9 +1,4 @@
-export interface PantryItemType {
-    id: string;
-    name: string;
-    unit: string;
-    quantity: number;
-}
+import { z } from 'zod';
 
 export enum PantryMode {
     Default,
@@ -18,14 +13,6 @@ export enum PantrySort {
     Quantity = 'Quantity'
 }
 
-export interface GroceryItemType {
-    id: string;
-    name: string;
-    unit: string;
-    quantity: number;
-    checked: boolean;
-}
-
 export enum GroceryMode {
     Default,
     Edit,
@@ -37,3 +24,17 @@ export enum GrocerySort {
     Name = 'Name',
     Quantity = 'Quantity'
 }
+
+export const AddPantryItemSchema = z.object({
+    itemName: z.string(),
+    itemUnit: z.string(),
+    quantity: z.number().gt(0),
+});
+export type AddPantryItemType = z.infer<typeof AddPantryItemSchema>;
+
+export const AddGroceryItemSchema = z.object({
+    itemName: z.string(),
+    itemUnit: z.string(),
+    quantity: z.number().gt(0),
+});
+export type AddGroceryItemType = z.infer<typeof AddGroceryItemSchema>;
