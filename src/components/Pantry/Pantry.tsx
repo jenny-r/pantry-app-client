@@ -147,7 +147,7 @@ export function Pantry() {
                 {sortedPantryItems.map((item) => (
                     <PantryItem
                         item={item}
-                        key={item.itemName}
+                        key={item.id}
                         deleteChecked={item.id in deleteList}
                         onClickDeleteCheckbox={addToDeleteList}
                         onChangeEditInput={addToEditList}

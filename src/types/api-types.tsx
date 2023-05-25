@@ -43,3 +43,10 @@ export const LoadAllResponseSchema = z.object({
 });
 
 export type LoadAllResponse = z.infer<typeof LoadAllResponseSchema>;
+
+// Add Pantry Item Response
+export const AddPantryItemResponseSchema = z.discriminatedUnion('status', [
+    z.object({ status: z.literal(true), pantryItem: PantryItemSchema }),
+    z.object({ status: z.literal(false), error: z.string() }),
+]);
+export type AddPantryItemResponse = z.infer<typeof AddPantryItemResponseSchema>;

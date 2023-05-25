@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { LoadAllResponse, LoadAllResponseSchema, LoginResponse, LoginResponseSchema, RegisterResponse, RegisterResponseSchema } from './types/api-types';
+import { AddPantryItemResponse, AddPantryItemResponseSchema, LoadAllResponse, LoadAllResponseSchema, LoginResponse, LoginResponseSchema, RegisterResponse, RegisterResponseSchema } from './types/api-types';
+import { AddPantryItemType } from './types/types';
 
 const { REACT_APP_SERVICE_URL } = process.env;
 
@@ -22,4 +23,11 @@ export async function loadAllItems(accessToken: string): Promise<LoadAllResponse
         data: { accessToken },
     });
     return LoadAllResponseSchema.parse(response.data);
+}
+
+export async function callAddPantryItem(accessToken: string, pantryItem: AddPantryItemType): Promise<AddPantryItemResponse> {
+    const response = await axios.post(`${REACT_APP_SERVICE_URL}/addPantryItem`, {
+        data: { accessToken, pantryItem },
+    });
+    return AddPantryItemResponseSchema.parse(response.data);
 }

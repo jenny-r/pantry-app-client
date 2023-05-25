@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AddPantryItemType, PantryMode, PantrySort } from '../types/types';
+import { PantryMode, PantrySort } from '../types/types';
 import { PantryItemType } from '../types/api-types';
 
 interface PantryState {
@@ -28,10 +28,8 @@ const pantrySlice = createSlice({
         setPantryState: (state, action: PayloadAction<{ [id: string]: PantryItemType }>) => {
             state.pantryItems = action.payload;
         },
-        addPantryItems: (state, action: PayloadAction<AddPantryItemType[]>) => {
-            // action.payload.forEach((item) => {
-            //     state.pantryItems['id' + Math.random()] = item;
-            // });
+        addPantryItem: (state, action: PayloadAction<PantryItemType>) => {
+            state.pantryItems[action.payload.id] = action.payload;
         },
         deletePantryItems: (state, action: PayloadAction<string[]>) => {
             for (let i = 0; i < action.payload.length; i++) {
@@ -73,7 +71,7 @@ const pantrySlice = createSlice({
 
 export const {
     setPantryState,
-    addPantryItems,
+    addPantryItem,
     deletePantryItems,
     editPantryItems,
     changePantryMode,
