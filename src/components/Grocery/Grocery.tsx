@@ -1,18 +1,25 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react';
 import { GroceryItem } from '../GroceryItem/GroceryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { GroceryMode, GrocerySort } from '../../types/types';
 import { GroceryItemType, PantryItemType } from '../../types/api-types';
-import { deleteGroceryItems, editGroceryItems, changeGroceryMode, changeGrocerySort, toggleChecked, setSearchField } from '../../store/grocerySlice';
-import { addPantryItems } from '../../store/pantrySlice';
+import {
+    deleteGroceryItems,
+    editGroceryItems,
+    changeGroceryMode,
+    changeGrocerySort,
+    toggleChecked,
+    setSearchField,
+} from '../../store/grocerySlice';
+// import { addPantryItem } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddGroceryItem } from '../AddGroceryItem/AddGroceryItem';
 import './Grocery.css';
 
 export function Grocery() {
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
     const [deleteList, setDeleteList] = useState<{ [id: string]: string }>({});
     const [editList, setEditList] = useState<{ [id: string]: GroceryItemType }>({});
 
@@ -30,11 +37,11 @@ export function Grocery() {
         }
         if (searchField !== '') {
             const lowerCaseSearchField = searchField.toLowerCase();
-            temp = temp.filter(item => item.itemName.toLowerCase().includes(lowerCaseSearchField));
+            temp = temp.filter((item) => item.itemName.toLowerCase().includes(lowerCaseSearchField));
         }
         return temp;
-    }, [groceryItems, grocerySort, searchField])
-    const sortedCheckedGroceryItems: GroceryItemType[] = sortedGroceryItems.filter(item => item.checked === true);
+    }, [groceryItems, grocerySort, searchField]);
+    const sortedCheckedGroceryItems: GroceryItemType[] = sortedGroceryItems.filter((item) => item.checked === true);
 
     useEffect(() => {
         setDeleteList({});
@@ -49,30 +56,30 @@ export function Grocery() {
             delete deleteList[id];
             setDeleteList(deleteList);
         }
-    }
+    };
     const addToEditList = (groceryItem: GroceryItemType) => {
         editList[groceryItem.id] = groceryItem;
         setEditList(editList);
-    }
+    };
     const cancelMode = () => {
         dispatch(changeGroceryMode(GroceryMode.Default));
-    }
+    };
     const handleSortChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         const { options, selectedIndex } = event.target;
         const text: string = options[selectedIndex].text.toLowerCase();
 
         if (text === 'name') {
-            dispatch(changeGrocerySort(GrocerySort.Name))
+            dispatch(changeGrocerySort(GrocerySort.Name));
         } else if (text === 'quantity') {
-            dispatch(changeGrocerySort(GrocerySort.Quantity))
+            dispatch(changeGrocerySort(GrocerySort.Quantity));
         }
     };
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchField(e.target.value));
-    }
+    };
     const toggleGroceryCheck = (id: string, isChecked: boolean) => {
         dispatch(toggleChecked({ id, isChecked }));
-    }
+    };
 
     const addToPantry = (checkedItems: GroceryItemType[]) => {
         const addToPantryList: PantryItemType[] = checkedItems.map((item) => ({
@@ -81,39 +88,38 @@ export function Grocery() {
             itemName: item.itemName,
             itemUnit: item.itemUnit,
             quantity: item.quantity,
-            updatedAt: item.updatedAt
+            updatedAt: item.updatedAt,
         }));
-        setDeleteList({})
+        setDeleteList({});
         setEditList({});
-        dispatch(addPantryItems(addToPantryList));
-        dispatch(deleteGroceryItems(checkedItems.map(item => item.id)));
-    }
+        console.log(addToPantryList);
+        // dispatch(addPantryItem(addToPantryList));
+        dispatch(deleteGroceryItems(checkedItems.map((item) => item.id)));
+    };
 
     let addButton: any = null;
     if (groceryMode === GroceryMode.Default) {
-        addButton = (
-            <AddButton
-                onClick={() => dispatch(changeGroceryMode(GroceryMode.Add))}
-            />
-        );
+        addButton = <AddButton onClick={() => dispatch(changeGroceryMode(GroceryMode.Add))} />;
     }
 
     let addGroceryItemDialogue: any = null;
     if (groceryMode === GroceryMode.Add) {
-        addGroceryItemDialogue = (
-            <AddGroceryItem itemName={''} itemUnit={''} />
-        )
+        addGroceryItemDialogue = <AddGroceryItem itemName={''} itemUnit={''} />;
     }
 
     let deleteModeButtons: any = null;
     if (groceryMode === GroceryMode.Delete) {
         deleteModeButtons = (
-            <div className='Grocery-button-container'>
-                <div className='Grocery-button-wrapper'>
-                    <Button buttonText='Cancel' buttonColor={ButtonColor.Gray} onClick={cancelMode} />
+            <div className="Grocery-button-container">
+                <div className="Grocery-button-wrapper">
+                    <Button buttonText="Cancel" buttonColor={ButtonColor.Gray} onClick={cancelMode} />
                 </div>
-                <div className='Grocery-button-wrapper'>
-                    <Button buttonText='Confirm' buttonColor={ButtonColor.Blue} onClick={() => dispatch(deleteGroceryItems(Object.keys(deleteList)))} />
+                <div className="Grocery-button-wrapper">
+                    <Button
+                        buttonText="Confirm"
+                        buttonColor={ButtonColor.Blue}
+                        onClick={() => dispatch(deleteGroceryItems(Object.keys(deleteList)))}
+                    />
                 </div>
             </div>
         );
@@ -122,19 +128,23 @@ export function Grocery() {
     let editModeButtons: any = null;
     if (groceryMode === GroceryMode.Edit) {
         editModeButtons = (
-            <div className='Grocery-button-container'>
-                <div className='Grocery-button-wrapper'>
-                    <Button buttonText='Cancel' buttonColor={ButtonColor.Gray} onClick={cancelMode} />
+            <div className="Grocery-button-container">
+                <div className="Grocery-button-wrapper">
+                    <Button buttonText="Cancel" buttonColor={ButtonColor.Gray} onClick={cancelMode} />
                 </div>
-                <div className='Grocery-button-wrapper'>
-                    <Button buttonText='Confirm' buttonColor={ButtonColor.Blue} onClick={() => dispatch(editGroceryItems(editList))} />
+                <div className="Grocery-button-wrapper">
+                    <Button
+                        buttonText="Confirm"
+                        buttonColor={ButtonColor.Blue}
+                        onClick={() => dispatch(editGroceryItems(editList))}
+                    />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className='Grocery-grocery'>
+        <div className="Grocery-grocery">
             <SearchBar
                 sortOptionNames={sortOptionNames}
                 onClickDelete={() => dispatch(changeGroceryMode(GroceryMode.Delete))}
@@ -142,20 +152,41 @@ export function Grocery() {
                 onSortChange={handleSortChange}
                 onSearchChange={handleSearchChange}
             />
-            <div className='Grocery-grocery-item-list'>
-                <div className='Grocery-grocery-item-unchecked-list'>
-                    {sortedGroceryItems.filter(item => item.checked === false).map((item) =>
-                        <GroceryItem item={item} key={item.itemName} deleteChecked={item.id in deleteList} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
-                    )}
+            <div className="Grocery-grocery-item-list">
+                <div className="Grocery-grocery-item-unchecked-list">
+                    {sortedGroceryItems
+                        .filter((item) => item.checked === false)
+                        .map((item) => (
+                            <GroceryItem
+                                item={item}
+                                key={item.id}
+                                deleteChecked={item.id in deleteList}
+                                onClickDeleteCheckbox={addToDeleteList}
+                                onChangeEditInput={addToEditList}
+                                onClickGroceryCheckbox={toggleGroceryCheck}
+                            />
+                        ))}
                 </div>
-                <div className='Grocery-grocery-item-checked-list'>
-                    <div className='Grocery-checked-header'>
+                <div className="Grocery-grocery-item-checked-list">
+                    <div className="Grocery-checked-header">
                         <div>Checked Items</div>
-                        <div className='Grocery-add-to-pantry-button' onClick={() => addToPantry(sortedCheckedGroceryItems)}>Add to Pantry</div>
+                        <div
+                            className="Grocery-add-to-pantry-button"
+                            onClick={() => addToPantry(sortedCheckedGroceryItems)}
+                        >
+                            Add to Pantry
+                        </div>
                     </div>
-                    {sortedCheckedGroceryItems.map((item) =>
-                        <GroceryItem item={item} key={item.itemName} deleteChecked={item.id in deleteList} onClickDeleteCheckbox={addToDeleteList} onChangeEditInput={addToEditList} onClickGroceryCheckbox={toggleGroceryCheck} />
-                    )}
+                    {sortedCheckedGroceryItems.map((item) => (
+                        <GroceryItem
+                            item={item}
+                            key={item.id}
+                            deleteChecked={item.id in deleteList}
+                            onClickDeleteCheckbox={addToDeleteList}
+                            onChangeEditInput={addToEditList}
+                            onClickGroceryCheckbox={toggleGroceryCheck}
+                        />
+                    ))}
                 </div>
             </div>
             {addButton}
@@ -163,5 +194,5 @@ export function Grocery() {
             {editModeButtons}
             {addGroceryItemDialogue}
         </div>
-    )
+    );
 }

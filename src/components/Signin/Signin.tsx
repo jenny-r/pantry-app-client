@@ -26,7 +26,6 @@ export function Signin({ onRegisterClick }: { onRegisterClick: (isSigningIn: boo
                 setIsSignInFail(false);
             })
             .catch((err) => {
-                console.log(err);
                 setIsSignInFail(true);
             });
     };
