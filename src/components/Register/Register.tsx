@@ -24,7 +24,7 @@ export function Register({ onSigninClick }: { onSigninClick: (isSigningIn: boole
         register(email, password)
             .then((response) => {
                 if (response.status === true) {
-                    dispatch(onSignInSuccess(response.accessToken));
+                    dispatch(onSignInSuccess(response.accessToken, {}, {}));
                     setIsRegisterFail(false);
                     setErrorMessage('');
                 } else {

@@ -37,7 +37,7 @@
     border: 1px solid #ff6161;
     border-radius: 5px;
     padding: 5px 25px;
-    margin-bottom: 6px;
+    margin: 0 20px 6px 20px;
 }
 
 label {
