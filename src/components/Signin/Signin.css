@@ -37,7 +37,7 @@
     border: 1px solid #ff6161;
     border-radius: 5px;
     padding: 5px 25px;
-    margin-bottom: 6px;
+    margin: 0 20px 6px 20px;
 }
 
 label {
@@ -64,6 +64,7 @@ label {
     background-color: rgb(211, 247, 253);
     font-size: 16px;
     font-weight: 600;
+    text-align: center;
     border-width: 1px;
     border-radius: 5px;
 }

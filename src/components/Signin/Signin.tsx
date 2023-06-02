@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../store/hooks';
-import { signIn } from '../../api';
+import { loadAllItems, signIn } from '../../api';
 import { onSignInSuccess } from '../../store/userSlice';
 import './Signin.css';
 
@@ -10,6 +10,7 @@ export function Signin({ onRegisterClick }: { onRegisterClick: (isSigningIn: boo
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSignInFail, setIsSignInFail] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value.toLowerCase());
@@ -19,15 +20,26 @@ export function Signin({ onRegisterClick }: { onRegisterClick: (isSigningIn: boo
         setPassword(event.target.value);
     };
 
-    const handleSignIn = (email: string, password: string) => {
-        signIn(email, password)
-            .then((response) => {
-                dispatch(onSignInSuccess(response.accessToken));
+    const handleSignIn = async (email: string, password: string) => {
+        let accessToken: string | null = null;
+        try {
+            accessToken = (await signIn(email, password)).accessToken;
+        } catch (error) {
+            setIsSignInFail(true);
+            setErrorMessage('Invalid login');
+        }
+
+        if (accessToken) {
+            try {
+                const items = await loadAllItems(accessToken);
+                dispatch(onSignInSuccess(accessToken, items.pantryItems, items.groceryItems));
                 setIsSignInFail(false);
-            })
-            .catch((err) => {
+                setErrorMessage('');
+            } catch (error) {
                 setIsSignInFail(true);
-            });
+                setErrorMessage('Unable to login: please try again later');
+            }
+        }
     };
 
     const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -38,7 +50,7 @@ export function Signin({ onRegisterClick }: { onRegisterClick: (isSigningIn: boo
 
     let invalidSignInDialogue: any = null;
     if (isSignInFail) {
-        invalidSignInDialogue = <div className="Signin-fail">Invalid login</div>;
+        invalidSignInDialogue = <div className="Signin-fail">{errorMessage}</div>;
     }
 
     return (

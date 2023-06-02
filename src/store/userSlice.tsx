@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from './store';
-import { loadAllItems } from '../api';
 import { setPantryState } from './pantrySlice';
 import { setGroceryState } from './grocerySlice';
+import { GroceryItemType, PantryItemType } from '../types/api-types';
 
 interface UserState {
     accessToken: string | null;
@@ -27,13 +27,15 @@ const userSlice = createSlice({
 
 export const { signInSuccess, signOut } = userSlice.actions;
 
-export function onSignInSuccess(accessToken: string) {
+export function onSignInSuccess(
+    accessToken: string,
+    pantryItems: { [id: string]: PantryItemType },
+    groceryItems: { [id: string]: GroceryItemType },
+) {
     return (dispatch: AppDispatch) => {
         dispatch(signInSuccess(accessToken));
-        loadAllItems(accessToken).then((response) => {
-            dispatch(setPantryState(response.pantryItems));
-            dispatch(setGroceryState(response.groceryItems));
-        });
+        dispatch(setPantryState(pantryItems));
+        dispatch(setGroceryState(groceryItems));
     };
 }
 
