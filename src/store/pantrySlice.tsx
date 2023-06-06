@@ -35,7 +35,6 @@ const pantrySlice = createSlice({
             for (let i = 0; i < action.payload.length; i++) {
                 delete state.pantryItems[action.payload[i]];
             }
-            state.pantryMode = PantryMode.Default;
         },
         editPantryItems: (state, action: PayloadAction<{ [id: string]: PantryItemType }>) => {
             for (let id of Object.keys(action.payload)) {
