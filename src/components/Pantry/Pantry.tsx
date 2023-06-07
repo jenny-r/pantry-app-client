@@ -5,24 +5,27 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { PantryMode, PantrySort } from '../../types/types';
 import { PantryItemType } from '../../types/api-types';
 import {
-    deletePantryItems,
     editPantryItems,
     changePantryMode,
     changePantrySort,
     setGroceryAdd,
     setSearchField,
+    deletePantryItems,
 } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddPantryItem } from '../AddPantryItem/AddPantryItem';
 import { AddGroceryItem } from '../AddGroceryItem/AddGroceryItem';
 import './Pantry.css';
+import { callDeletePantryItems } from '../../api';
 
 export function Pantry() {
     const dispatch = useAppDispatch();
     const [deleteList, setDeleteList] = useState<{ [id: string]: string }>({});
     const [editList, setEditList] = useState<{ [id: string]: PantryItemType }>({});
+    const [errorMessage, setErrorMessage] = useState('');
 
+    const accessToken = useAppSelector((state) => state.user.accessToken);
     const pantryItems: PantryItemType[] = useAppSelector((state) => Object.values(state.pantry.pantryItems));
     const pantryMode: PantryMode = useAppSelector((state) => state.pantry.pantryMode);
     const pantrySort: PantrySort = useAppSelector((state) => state.pantry.pantrySort);
@@ -46,6 +49,7 @@ export function Pantry() {
     useEffect(() => {
         setDeleteList({});
         setEditList({});
+        setErrorMessage('');
     }, [pantryMode]);
 
     const addToDeleteList = (id: string, isChecked: boolean) => {
@@ -57,13 +61,34 @@ export function Pantry() {
             setDeleteList(deleteList);
         }
     };
+
     const addToEditList = (pantryItem: PantryItemType) => {
         editList[pantryItem.id] = pantryItem;
         setEditList(editList);
     };
+
     const cancelMode = () => {
         dispatch(changePantryMode(PantryMode.Default));
     };
+
+    const handlePantryItemsDelete = (accessToken: string | null, deleteIdList: string[]) => {
+        if (accessToken) {
+            callDeletePantryItems(accessToken, deleteIdList)
+                .then((response) => {
+                    if (response.success === true) {
+                        dispatch(deletePantryItems(deleteIdList));
+                        dispatch(changePantryMode(PantryMode.Default));
+                        setErrorMessage('');
+                    } else {
+                        setErrorMessage('Unable to delete. Please try again later.');
+                    }
+                })
+                .catch(() => {
+                    setErrorMessage('Unable to delete. Please try again later.');
+                });
+        }
+    };
+
     const handleSortChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         const { options, selectedIndex } = event.target;
         const text: string = options[selectedIndex].text.toLowerCase();
@@ -74,6 +99,7 @@ export function Pantry() {
             dispatch(changePantrySort(PantrySort.Quantity));
         }
     };
+
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchField(e.target.value));
     };
@@ -109,7 +135,7 @@ export function Pantry() {
                     <Button
                         buttonText="Confirm"
                         buttonColor={ButtonColor.Blue}
-                        onClick={() => dispatch(deletePantryItems(Object.keys(deleteList)))}
+                        onClick={() => handlePantryItemsDelete(accessToken, Object.keys(deleteList))}
                     />
                 </div>
             </div>
@@ -134,8 +160,14 @@ export function Pantry() {
         );
     }
 
+    let errorDialogue: any = null;
+    if (errorMessage !== '') {
+        errorDialogue = <div className="Pantry-error">{errorMessage}</div>;
+    }
+
     return (
         <div className="Pantry-pantry">
+            {errorDialogue}
             <SearchBar
                 sortOptionNames={sortOptionNames}
                 onClickDelete={() => dispatch(changePantryMode(PantryMode.Delete))}
