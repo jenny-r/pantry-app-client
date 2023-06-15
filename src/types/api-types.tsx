@@ -57,3 +57,10 @@ export const DeletePantryItemsResponseSchema = z.object({
 });
 
 export type DeletePantryItemsResponse = z.infer<typeof DeletePantryItemsResponseSchema>;
+
+// Delete Pantry Items Response
+export const DeleteGroceryItemsResponseSchema = z.object({
+    success: z.boolean(),
+});
+
+export type DeleteGroceryItemsResponse = z.infer<typeof DeleteGroceryItemsResponseSchema>;

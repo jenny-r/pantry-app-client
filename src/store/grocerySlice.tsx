@@ -30,7 +30,6 @@ const grocerySlice = createSlice({
             for (let i = 0; i < action.payload.length; i++) {
                 delete state.groceryItems[action.payload[i]];
             }
-            state.groceryMode = GroceryMode.Default;
         },
         editGroceryItems: (state, action: PayloadAction<{ [id: string]: GroceryItemType }>) => {
             for (let id of Object.keys(action.payload)) {

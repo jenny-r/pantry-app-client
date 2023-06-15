@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
     AddPantryItemResponse,
     AddPantryItemResponseSchema,
+    DeleteGroceryItemsResponse,
     DeletePantryItemsResponse,
     DeletePantryItemsResponseSchema,
     LoadAllResponse,
@@ -51,6 +52,16 @@ export async function callDeletePantryItems(
     deleteList: string[],
 ): Promise<DeletePantryItemsResponse> {
     const response = await axios.post(`${REACT_APP_SERVICE_URL}/deletePantryItems`, {
+        data: { accessToken, deleteList },
+    });
+    return DeletePantryItemsResponseSchema.parse(response.data);
+}
+
+export async function callDeleteGroceryItems(
+    accessToken: string,
+    deleteList: string[],
+): Promise<DeleteGroceryItemsResponse> {
+    const response = await axios.post(`${REACT_APP_SERVICE_URL}/deleteGroceryItems`, {
         data: { accessToken, deleteList },
     });
     return DeletePantryItemsResponseSchema.parse(response.data);
