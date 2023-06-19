@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AddGroceryItemType, GroceryMode, GrocerySort } from '../types/types';
+import { GroceryMode, GrocerySort } from '../types/types';
 import { GroceryItemType } from '../types/api-types';
 
 interface GroceryState {
@@ -23,8 +23,8 @@ const grocerySlice = createSlice({
         setGroceryState: (state, action: PayloadAction<{ [id: string]: GroceryItemType }>) => {
             state.groceryItems = action.payload;
         },
-        addGroceryItem: (state, action: PayloadAction<AddGroceryItemType>) => {
-            // state.groceryItems[Object.keys(state.groceryItems).length + 1] = action.payload;
+        addGroceryItem: (state, action: PayloadAction<GroceryItemType>) => {
+            state.groceryItems[action.payload.id] = action.payload;
         },
         deleteGroceryItems: (state, action: PayloadAction<string[]>) => {
             for (let i = 0; i < action.payload.length; i++) {
