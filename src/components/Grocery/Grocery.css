@@ -27,6 +27,18 @@
     margin: 20px 15px;
 }
 
+.Grocery-error {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    background: #fff1f1;
+    color: #ff6161;
+    border: 1px solid #ff6161;
+    border-radius: 5px;
+    padding: 5px 25px;
+    margin: 12px 20px 0px 20px;
+}
+
 .Grocery-grocery-item-checked-list {
     margin-bottom: 75px;
 }
