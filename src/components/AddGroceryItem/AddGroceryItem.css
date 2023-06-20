@@ -14,6 +14,15 @@
     padding: 10px;
 }
 
+.AddGroceryItem-fail {
+    background: #fff1f1;
+    color: #ff6161;
+    border: 1px solid #ff6161;
+    border-radius: 5px;
+    padding: 5px 25px;
+    margin: 0px 15px 6px 15px;
+}
+
 .AddGroceryItem-input-wrapper {
     display: flex;
     flex-direction: row;
