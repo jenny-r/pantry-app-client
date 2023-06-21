@@ -40,7 +40,7 @@ export function PantryItem({
 
     const handlePantryItemQuantityChange = (accessToken: string | null, item: PantryItemType, amount: number) => {
         const newQuantity = item.quantity + amount;
-        if (amount !== -1 || newQuantity > 0) {
+        if (newQuantity > 0) {
             const newItem: PantryItemType = {
                 id: item.id,
                 userId: item.userId,
