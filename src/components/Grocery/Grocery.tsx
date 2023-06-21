@@ -16,13 +16,16 @@ import {
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddGroceryItem } from '../AddGroceryItem/AddGroceryItem';
+import { callDeleteGroceryItems } from '../../api';
 import './Grocery.css';
 
 export function Grocery() {
     const dispatch = useAppDispatch();
     const [deleteList, setDeleteList] = useState<{ [id: string]: string }>({});
     const [editList, setEditList] = useState<{ [id: string]: GroceryItemType }>({});
+    const [errorMessage, setErrorMessage] = useState('');
 
+    const accessToken = useAppSelector((state) => state.user.accessToken);
     const groceryItems: GroceryItemType[] = useAppSelector((state) => Object.values(state.grocery.groceryItems));
     const groceryMode: GroceryMode = useAppSelector((state) => state.grocery.groceryMode);
     const grocerySort: GrocerySort = useAppSelector((state) => state.grocery.grocerySort);
@@ -46,6 +49,7 @@ export function Grocery() {
     useEffect(() => {
         setDeleteList({});
         setEditList({});
+        setErrorMessage('');
     }, [groceryMode]);
 
     const addToDeleteList = (id: string, isChecked: boolean) => {
@@ -57,13 +61,34 @@ export function Grocery() {
             setDeleteList(deleteList);
         }
     };
+
     const addToEditList = (groceryItem: GroceryItemType) => {
         editList[groceryItem.id] = groceryItem;
         setEditList(editList);
     };
+
     const cancelMode = () => {
         dispatch(changeGroceryMode(GroceryMode.Default));
     };
+
+    const handleGroceryItemsDelete = (accessToken: string | null, deleteIdList: string[]) => {
+        if (accessToken) {
+            callDeleteGroceryItems(accessToken, deleteIdList)
+                .then((response) => {
+                    if (response.success === true) {
+                        dispatch(deleteGroceryItems(deleteIdList));
+                        dispatch(changeGroceryMode(GroceryMode.Default));
+                        setErrorMessage('');
+                    } else {
+                        setErrorMessage('Unable to delete. Please try again later.');
+                    }
+                })
+                .catch(() => {
+                    setErrorMessage('Unable to delete. Please try again later.');
+                });
+        }
+    };
+
     const handleSortChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         const { options, selectedIndex } = event.target;
         const text: string = options[selectedIndex].text.toLowerCase();
@@ -118,7 +143,7 @@ export function Grocery() {
                     <Button
                         buttonText="Confirm"
                         buttonColor={ButtonColor.Blue}
-                        onClick={() => dispatch(deleteGroceryItems(Object.keys(deleteList)))}
+                        onClick={() => handleGroceryItemsDelete(accessToken, Object.keys(deleteList))}
                     />
                 </div>
             </div>
@@ -143,8 +168,14 @@ export function Grocery() {
         );
     }
 
+    let errorDialogue: any = null;
+    if (errorMessage !== '') {
+        errorDialogue = <div className="Grocery-error">{errorMessage}</div>;
+    }
+
     return (
         <div className="Grocery-grocery">
+            {errorDialogue}
             <SearchBar
                 sortOptionNames={sortOptionNames}
                 onClickDelete={() => dispatch(changeGroceryMode(GroceryMode.Delete))}

@@ -1,7 +1,10 @@
 import axios from 'axios';
 import {
+    AddGroceryItemResponse,
+    AddGroceryItemResponseSchema,
     AddPantryItemResponse,
     AddPantryItemResponseSchema,
+    DeleteGroceryItemsResponse,
     DeletePantryItemsResponse,
     DeletePantryItemsResponseSchema,
     EditPantryItemsResponse,
@@ -14,7 +17,7 @@ import {
     RegisterResponse,
     RegisterResponseSchema,
 } from './types/api-types';
-import { AddPantryItemType } from './types/types';
+import { AddGroceryItemType, AddPantryItemType } from './types/types';
 
 const { REACT_APP_SERVICE_URL } = process.env;
 
@@ -67,4 +70,25 @@ export async function callEditPantryItems(
         data: { accessToken, editList },
     });
     return EditPantryItemsResponseSchema.parse(response.data);
+}
+
+
+export async function callAddGroceryItem(
+    accessToken: string,
+    groceryItem: AddGroceryItemType,
+): Promise<AddGroceryItemResponse> {
+    const response = await axios.post(`${REACT_APP_SERVICE_URL}/addGroceryItem`, {
+        data: { accessToken, groceryItem },
+    });
+    return AddGroceryItemResponseSchema.parse(response.data);
+}
+
+export async function callDeleteGroceryItems(
+    accessToken: string,
+    deleteList: string[],
+): Promise<DeleteGroceryItemsResponse> {
+    const response = await axios.post(`${REACT_APP_SERVICE_URL}/deleteGroceryItems`, {
+        data: { accessToken, deleteList },
+    });
+    return DeletePantryItemsResponseSchema.parse(response.data);
 }
