@@ -58,6 +58,13 @@ export const DeletePantryItemsResponseSchema = z.object({
 
 export type DeletePantryItemsResponse = z.infer<typeof DeletePantryItemsResponseSchema>;
 
+// Edit Pantry Items Response
+export const EditPantryItemsResponseSchema = z.discriminatedUnion('status', [
+    z.object({ status: z.literal(true), pantryItems: z.record(PantryItemSchema) }),
+    z.object({ status: z.literal(false), error: z.string() }),
+]);
+export type EditPantryItemsResponse = z.infer<typeof EditPantryItemsResponseSchema>;
+
 // Add Grocery Item Response
 export const AddGroceryItemResponseSchema = z.discriminatedUnion('status', [
     z.object({ status: z.literal(true), groceryItem: GroceryItemSchema }),

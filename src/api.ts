@@ -7,10 +7,13 @@ import {
     DeleteGroceryItemsResponse,
     DeletePantryItemsResponse,
     DeletePantryItemsResponseSchema,
+    EditPantryItemsResponse,
+    EditPantryItemsResponseSchema,
     LoadAllResponse,
     LoadAllResponseSchema,
     LoginResponse,
     LoginResponseSchema,
+    PantryItemType,
     RegisterResponse,
     RegisterResponseSchema,
 } from './types/api-types';
@@ -58,6 +61,17 @@ export async function callDeletePantryItems(
     });
     return DeletePantryItemsResponseSchema.parse(response.data);
 }
+
+export async function callEditPantryItems(
+    accessToken: string,
+    editList: { [id: string]: PantryItemType },
+): Promise<EditPantryItemsResponse> {
+    const response = await axios.post(`${REACT_APP_SERVICE_URL}/editPantryItems`, {
+        data: { accessToken, editList },
+    });
+    return EditPantryItemsResponseSchema.parse(response.data);
+}
+
 
 export async function callAddGroceryItem(
     accessToken: string,

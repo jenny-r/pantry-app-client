@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PantryMode, PantrySort } from '../types/types';
 import { PantryItemType } from '../types/api-types';
+import { callEditPantryItems } from '../api';
 
 interface PantryState {
     pantryItems: { [id: string]: PantryItemType };
@@ -40,21 +41,12 @@ const pantrySlice = createSlice({
             for (let id of Object.keys(action.payload)) {
                 state.pantryItems[id] = action.payload[id];
             }
-            state.pantryMode = PantryMode.Default;
         },
         changePantryMode: (state, action: PayloadAction<PantryMode>) => {
             state.pantryMode = action.payload;
         },
         changePantrySort: (state, action: PayloadAction<PantrySort>) => {
             state.pantrySort = action.payload;
-        },
-        increase: (state, action: PayloadAction<string>) => {
-            state.pantryItems[action.payload].quantity += 1;
-        },
-        decrease: (state, action: PayloadAction<string>) => {
-            if (state.pantryItems[action.payload].quantity > 0) {
-                state.pantryItems[action.payload].quantity -= 1;
-            }
         },
         setGroceryAdd: (state, action: PayloadAction<{ itemName: string; itemUnit: string }>) => {
             state.groceryAdd = {
@@ -75,10 +67,30 @@ export const {
     editPantryItems,
     changePantryMode,
     changePantrySort,
-    increase,
-    decrease,
     setGroceryAdd,
     setSearchField,
 } = pantrySlice.actions;
+
+export async function onPantryItemsEdit(
+    accessToken: string | null,
+    editList: { [id: string]: PantryItemType },
+): Promise<{ [id: string]: PantryItemType }> {
+    if (!accessToken) {
+        return Promise.reject('Unable to edit. Please try again later.');
+    }
+    return callEditPantryItems(accessToken, editList)
+        .then((response) => {
+            if (response.status === true) {
+                return response.pantryItems;
+            }
+            throw response.error;
+        })
+        .catch((error) => {
+            if (typeof error === 'string') {
+                throw error;
+            }
+            throw new Error('Unable to edit. Please try again later.');
+        });
+}
 
 export default pantrySlice.reducer;

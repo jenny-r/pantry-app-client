@@ -11,13 +11,14 @@ import {
     setGroceryAdd,
     setSearchField,
     deletePantryItems,
+    onPantryItemsEdit,
 } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddPantryItem } from '../AddPantryItem/AddPantryItem';
 import { AddGroceryItem } from '../AddGroceryItem/AddGroceryItem';
-import './Pantry.css';
 import { callDeletePantryItems } from '../../api';
+import './Pantry.css';
 
 export function Pantry() {
     const dispatch = useAppDispatch();
@@ -89,6 +90,18 @@ export function Pantry() {
         }
     };
 
+    const handlePantryItemsEdit = (accessToken: string | null, editList: { [id: string]: PantryItemType }) => {
+        onPantryItemsEdit(accessToken, editList)
+            .then((editedPantryItems) => {
+                dispatch(editPantryItems(editedPantryItems));
+                dispatch(changePantryMode(PantryMode.Default));
+                setErrorMessage('');
+            })
+            .catch((error) => {
+                setErrorMessage(error);
+            });
+    };
+
     const handleSortChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         const { options, selectedIndex } = event.target;
         const text: string = options[selectedIndex].text.toLowerCase();
@@ -153,7 +166,7 @@ export function Pantry() {
                     <Button
                         buttonText="Confirm"
                         buttonColor={ButtonColor.Blue}
-                        onClick={() => dispatch(editPantryItems(editList))}
+                        onClick={() => handlePantryItemsEdit(accessToken, editList)}
                     />
                 </div>
             </div>
