@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GroceryMode, GrocerySort } from '../types/types';
 import { GroceryItemType } from '../types/api-types';
+import { callEditGroceryItems } from '../api';
 
 interface GroceryState {
     groceryItems: { [id: string]: GroceryItemType };
@@ -35,24 +36,12 @@ const grocerySlice = createSlice({
             for (let id of Object.keys(action.payload)) {
                 state.groceryItems[id] = action.payload[id];
             }
-            state.groceryMode = GroceryMode.Default;
         },
         changeGroceryMode: (state, action: PayloadAction<GroceryMode>) => {
             state.groceryMode = action.payload;
         },
         changeGrocerySort: (state, action: PayloadAction<GrocerySort>) => {
             state.grocerySort = action.payload;
-        },
-        increase: (state, action: PayloadAction<string>) => {
-            state.groceryItems[action.payload].quantity += 1;
-        },
-        decrease: (state, action: PayloadAction<string>) => {
-            if (state.groceryItems[action.payload].quantity > 0) {
-                state.groceryItems[action.payload].quantity -= 1;
-            }
-        },
-        toggleChecked: (state, action: PayloadAction<{ id: string; isChecked: boolean }>) => {
-            state.groceryItems[action.payload.id].checked = action.payload.isChecked;
         },
         setSearchField: (state, action: PayloadAction<string>) => {
             state.searchField = action.payload;
@@ -67,10 +56,29 @@ export const {
     editGroceryItems,
     changeGroceryMode,
     changeGrocerySort,
-    increase,
-    decrease,
-    toggleChecked,
     setSearchField,
 } = grocerySlice.actions;
+
+export async function onGroceryItemsEdit(
+    accessToken: string | null,
+    editList: { [id: string]: GroceryItemType },
+): Promise<{ [id: string]: GroceryItemType }> {
+    if (!accessToken) {
+        return Promise.reject('Unable to edit. Please try again later.');
+    }
+    return callEditGroceryItems(accessToken, editList)
+        .then((response) => {
+            if (response.status === true) {
+                return response.groceryItems;
+            }
+            throw response.error;
+        })
+        .catch((error) => {
+            if (typeof error === 'string') {
+                throw error;
+            }
+            throw new Error('Unable to edit. Please try again later.');
+        });
+}
 
 export default grocerySlice.reducer;

@@ -9,8 +9,8 @@ import {
     editGroceryItems,
     changeGroceryMode,
     changeGrocerySort,
-    toggleChecked,
     setSearchField,
+    onGroceryItemsEdit,
 } from '../../store/grocerySlice';
 // import { addPantryItem } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
@@ -89,6 +89,18 @@ export function Grocery() {
         }
     };
 
+    const handleGroceryItemsEdit = (accessToken: string | null, editList: { [id: string]: GroceryItemType }) => {
+        onGroceryItemsEdit(accessToken, editList)
+            .then((editedGroceryItems) => {
+                dispatch(editGroceryItems(editedGroceryItems));
+                dispatch(changeGroceryMode(GroceryMode.Default));
+                setErrorMessage('');
+            })
+            .catch((error) => {
+                setErrorMessage(error);
+            });
+    };
+
     const handleSortChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         const { options, selectedIndex } = event.target;
         const text: string = options[selectedIndex].text.toLowerCase();
@@ -99,11 +111,25 @@ export function Grocery() {
             dispatch(changeGrocerySort(GrocerySort.Quantity));
         }
     };
+
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchField(e.target.value));
     };
-    const toggleGroceryCheck = (id: string, isChecked: boolean) => {
-        dispatch(toggleChecked({ id, isChecked }));
+
+    const toggleGroceryCheck = (item: GroceryItemType, isChecked: boolean) => {
+        const toggleCheckList: { [id: string]: GroceryItemType } = {};
+        toggleCheckList[item.id] = {
+            id: item.id,
+            userId: item.userId,
+            itemName: item.itemName,
+            itemUnit: item.itemUnit,
+            quantity: item.quantity,
+            checked: isChecked,
+            updatedAt: item.updatedAt,
+        };
+        onGroceryItemsEdit(accessToken, toggleCheckList).then((toggledGroceryCheckItems) => {
+            dispatch(editGroceryItems(toggledGroceryCheckItems));
+        });
     };
 
     const addToPantry = (checkedItems: GroceryItemType[]) => {
@@ -161,7 +187,7 @@ export function Grocery() {
                     <Button
                         buttonText="Confirm"
                         buttonColor={ButtonColor.Blue}
-                        onClick={() => dispatch(editGroceryItems(editList))}
+                        onClick={() => handleGroceryItemsEdit(accessToken, editList)}
                     />
                 </div>
             </div>

@@ -7,8 +7,11 @@ import {
     DeleteGroceryItemsResponse,
     DeletePantryItemsResponse,
     DeletePantryItemsResponseSchema,
+    EditGroceryItemsResponse,
+    EditGroceryItemsResponseSchema,
     EditPantryItemsResponse,
     EditPantryItemsResponseSchema,
+    GroceryItemType,
     LoadAllResponse,
     LoadAllResponseSchema,
     LoginResponse,
@@ -91,4 +94,14 @@ export async function callDeleteGroceryItems(
         data: { accessToken, deleteList },
     });
     return DeletePantryItemsResponseSchema.parse(response.data);
+}
+
+export async function callEditGroceryItems(
+    accessToken: string,
+    editList: { [id: string]: GroceryItemType },
+): Promise<EditGroceryItemsResponse> {
+    const response = await axios.post(`${REACT_APP_SERVICE_URL}/editGroceryItems`, {
+        data: { accessToken, editList },
+    });
+    return EditGroceryItemsResponseSchema.parse(response.data);
 }
