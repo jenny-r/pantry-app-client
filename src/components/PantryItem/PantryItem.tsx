@@ -115,7 +115,7 @@ export function PantryItem({
                                 className="PantryItem-quantity-input"
                                 id="quantity"
                                 type="number"
-                                min="0"
+                                min="1"
                                 value={editedQuantity}
                                 onChange={handleQuantityEdit}
                             />
