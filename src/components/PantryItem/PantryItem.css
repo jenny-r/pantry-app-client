@@ -60,6 +60,7 @@
 .PantryItem-button-container-right {
     display: flex;
     flex-direction: row;
+    height: 100%;
 }
 
 .PantryItem-count-container {
