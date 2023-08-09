@@ -123,8 +123,9 @@ export function GroceryItem({
                         <div className="GroceryItem-count-container">
                             <input
                                 className="GroceryItem-quantity-input"
-                                type="text"
                                 id="quantity"
+                                type="number"
+                                min="1"
                                 value={editedQuantity}
                                 onChange={handleQuantityEdit}
                             />
