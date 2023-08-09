@@ -98,7 +98,7 @@ export function PantryItem({
         return (
             <div className="PantryItem-pantry-list-item">
                 <div className="PantryItem-item-container">
-                    <div className="PantryItem-checkbox-container-left">
+                    <div className="PantryItem-container-left">
                         <div className="PantryItem-name-container-left">
                             <input
                                 className="PantryItem-name-input"
@@ -115,7 +115,7 @@ export function PantryItem({
                                 className="PantryItem-quantity-input"
                                 id="quantity"
                                 type="number"
-                                min="0"
+                                min="1"
                                 value={editedQuantity}
                                 onChange={handleQuantityEdit}
                             />
