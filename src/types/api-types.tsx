@@ -86,3 +86,11 @@ export const EditGroceryItemsResponseSchema = z.discriminatedUnion('status', [
 ]);
 
 export type EditGroceryItemsResponse = z.infer<typeof EditGroceryItemsResponseSchema>;
+
+// Add To Pantry List Response
+export const AddToPantryListResponseSchema = z.object({
+    pantryItems: PantryItemSchema.array(),
+    deleteList: z.string().array(),
+});
+
+export type AddToPantryListResponse = z.infer<typeof AddToPantryListResponseSchema>;

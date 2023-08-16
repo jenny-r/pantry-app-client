@@ -29,8 +29,10 @@ const pantrySlice = createSlice({
         setPantryState: (state, action: PayloadAction<{ [id: string]: PantryItemType }>) => {
             state.pantryItems = action.payload;
         },
-        addPantryItem: (state, action: PayloadAction<PantryItemType>) => {
-            state.pantryItems[action.payload.id] = action.payload;
+        addPantryItems: (state, action: PayloadAction<PantryItemType[]>) => {
+            for (let i = 0; i < action.payload.length; i++) {
+                state.pantryItems[action.payload[i].id] = action.payload[i];
+            }
         },
         deletePantryItems: (state, action: PayloadAction<string[]>) => {
             for (let i = 0; i < action.payload.length; i++) {
@@ -62,7 +64,7 @@ const pantrySlice = createSlice({
 
 export const {
     setPantryState,
-    addPantryItem,
+    addPantryItems,
     deletePantryItems,
     editPantryItems,
     changePantryMode,
