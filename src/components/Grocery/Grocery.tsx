@@ -3,7 +3,7 @@ import { GroceryItem } from '../GroceryItem/GroceryItem';
 import { AddButton } from '../AddButton/AddButton';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { GroceryMode, GrocerySort } from '../../types/types';
-import { GroceryItemType, PantryItemType } from '../../types/api-types';
+import { GroceryItemType } from '../../types/api-types';
 import {
     deleteGroceryItems,
     editGroceryItems,
@@ -12,11 +12,11 @@ import {
     setSearchField,
     onGroceryItemsEdit,
 } from '../../store/grocerySlice';
-// import { addPantryItem } from '../../store/pantrySlice';
+import { addPantryItems } from '../../store/pantrySlice';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Button, ButtonColor } from '../Button/Button';
 import { AddGroceryItem } from '../AddGroceryItem/AddGroceryItem';
-import { callDeleteGroceryItems } from '../../api';
+import { callAddGroceryItemsToPantryList, callDeleteGroceryItems } from '../../api';
 import './Grocery.css';
 
 export function Grocery() {
@@ -132,20 +132,20 @@ export function Grocery() {
         });
     };
 
-    const addToPantry = (checkedItems: GroceryItemType[]) => {
-        const addToPantryList: PantryItemType[] = checkedItems.map((item) => ({
-            id: item.id,
-            userId: item.userId,
-            itemName: item.itemName,
-            itemUnit: item.itemUnit,
-            quantity: item.quantity,
-            updatedAt: item.updatedAt,
-        }));
-        setDeleteList({});
-        setEditList({});
-        console.log(addToPantryList);
-        // dispatch(addPantryItem(addToPantryList));
-        dispatch(deleteGroceryItems(checkedItems.map((item) => item.id)));
+    const handleAddToPantry = (accessToken: string | null, checkedItems: GroceryItemType[]) => {
+        if (accessToken && checkedItems.length > 0) {
+            callAddGroceryItemsToPantryList(accessToken, checkedItems)
+                .then((response) => {
+                    setEditList({});
+                    setDeleteList({});
+                    dispatch(addPantryItems(response.pantryItems));
+                    dispatch(deleteGroceryItems(response.deleteList));
+                    setErrorMessage('');
+                })
+                .catch(() => {
+                    setErrorMessage('Unable to add to pantry. Please try again later.');
+                });
+        }
     };
 
     let addButton: any = null;
@@ -229,7 +229,7 @@ export function Grocery() {
                         <div>Checked Items</div>
                         <div
                             className="Grocery-add-to-pantry-button"
-                            onClick={() => addToPantry(sortedCheckedGroceryItems)}
+                            onClick={() => handleAddToPantry(accessToken, sortedCheckedGroceryItems)}
                         >
                             Add to Pantry
                         </div>

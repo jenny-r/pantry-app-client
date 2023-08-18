@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, ButtonColor } from '../Button/Button';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addPantryItem, changePantryMode } from '../../store/pantrySlice';
+import { addPantryItems, changePantryMode } from '../../store/pantrySlice';
 import { PantryMode } from '../../types/types';
 import { callAddPantryItem } from '../../api';
 import './AddPantryItem.css';
@@ -35,7 +35,7 @@ export function AddPantryItem() {
             })
                 .then((response) => {
                     if (response.status === true) {
-                        dispatch(addPantryItem(response.pantryItem));
+                        dispatch(addPantryItems([response.pantryItem]));
                         setErrorMessage('');
                         dispatch(changePantryMode(PantryMode.Default));
                     } else {

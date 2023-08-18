@@ -4,6 +4,8 @@ import {
     AddGroceryItemResponseSchema,
     AddPantryItemResponse,
     AddPantryItemResponseSchema,
+    AddToPantryListResponse,
+    AddToPantryListResponseSchema,
     DeleteGroceryItemsResponse,
     DeletePantryItemsResponse,
     DeletePantryItemsResponseSchema,
@@ -75,7 +77,6 @@ export async function callEditPantryItems(
     return EditPantryItemsResponseSchema.parse(response.data);
 }
 
-
 export async function callAddGroceryItem(
     accessToken: string,
     groceryItem: AddGroceryItemType,
@@ -104,4 +105,14 @@ export async function callEditGroceryItems(
         data: { accessToken, editList },
     });
     return EditGroceryItemsResponseSchema.parse(response.data);
+}
+
+export async function callAddGroceryItemsToPantryList(
+    accessToken: string,
+    groceryItems: GroceryItemType[],
+): Promise<AddToPantryListResponse> {
+    const response = await axios.post(`${REACT_APP_SERVICE_URL}/addGroceryItemsToPantryList`, {
+        data: { accessToken, groceryItems },
+    });
+    return AddToPantryListResponseSchema.parse(response.data);
 }
