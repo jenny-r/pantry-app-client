@@ -1,12 +1,26 @@
 .App {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
+  overflow: hidden;
+}
+
+.App-main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
 }
 
 .App-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   flex: 1;
+}
+
+.App-footer {
+  text-align: center;
+  background: rgba(208, 247, 232, 0.842);
 }

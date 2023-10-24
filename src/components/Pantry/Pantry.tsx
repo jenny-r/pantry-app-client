@@ -188,7 +188,7 @@ export function Pantry() {
                 onSortChange={handleSortChange}
                 onSearchChange={handleSearchChange}
             />
-            <div className="Pantry-pantry-item-list">
+            <div className="Pantry-pantry-item-list-container">
                 {sortedPantryItems.map((item) => (
                     <PantryItem
                         item={item}
@@ -199,6 +199,7 @@ export function Pantry() {
                         onClickAddGroceryItem={toggleGroceryItemDialogue}
                     />
                 ))}
+                <div className="Pantry-spacer" />
             </div>
             {addButton}
             {deleteModeButtons}

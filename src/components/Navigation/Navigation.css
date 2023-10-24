@@ -1,13 +1,12 @@
-.Navigation-navbar {
+#Navigation-navbar {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 6%;
-    padding: 10px 20px 15px 20px;
+    padding: .25em 1.1em .25em 1.1em;
     background: rgba(208, 247, 232, 0.842);
 }
 
 .Navigation-app-name {
-    font-size: 24px;
+    font-size: 1.5rem;
 }

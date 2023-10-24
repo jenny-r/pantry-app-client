@@ -5,9 +5,11 @@
 }
 
 .Grocery-grocery-item-list {
-    height: 37em;
-    /* flex: 1; */
-    overflow: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
 }
 
 .Grocery-button-container {
@@ -39,8 +41,9 @@
     margin: 12px 20px 0px 20px;
 }
 
-.Grocery-grocery-item-checked-list {
-    margin-bottom: 75px;
+.Grocery-spacer {
+    min-height: 80px;
+    width: 100%;
 }
 
 .Grocery-checked-header {

@@ -1,13 +1,15 @@
 .Pantry-pantry {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
-.Pantry-pantry-item-list {
-    height: 37em;
-    /* flex: 1; */
-    overflow: auto;
+.Pantry-pantry-item-list-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
 }
 
 .Pantry-button-container {
@@ -37,4 +39,9 @@
     border-radius: 5px;
     padding: 5px 25px;
     margin: 12px 20px 0px 20px;
+}
+
+.Pantry-spacer {
+    min-height: 80px;
+    width: 100%;
 }
