@@ -93,9 +93,9 @@
 
 .PantryItem-quantity-input {
     height: 22px;
-    width: 28px;
+    width: 36px;
     text-align: center;
-    margin: auto 69px auto 0;
+    margin: auto 63px auto 0;
     border: 0.0625em solid rgba(0, 0, 0, 1);
     padding: 0.0625em;
     font-size: 1rem;
@@ -114,6 +114,10 @@
 }
 
 @media (max-width: 300px) {
+    .PantryItem-container-left {
+        min-width: 60px;
+    }
+
     .PantryItem-name {
         font-size: 1rem;
     }
@@ -125,5 +129,9 @@
     .PantryItem-count-button {
         min-height: 28px;
         width: 28px;
+    }
+
+    .PantryItem-quantity-input {
+        margin: auto 59px auto 0;
     }
 }

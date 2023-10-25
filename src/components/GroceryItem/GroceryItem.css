@@ -17,8 +17,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 50%;
+    flex: 1;
     height: 100%;
+    padding-right: 1em;
+    min-width: 80px;
 }
 
 .GroceryItem-delete-checkbox-container-left {
@@ -37,6 +39,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow-wrap: break-word;
 }
 
 .GroceryItem-name {
@@ -47,6 +50,7 @@
 }
 
 .GroceryItem-name-input {
+    flex: 1;
     margin: 0;
     font-size: 1.375rem;
     font-weight: 600;
@@ -60,7 +64,6 @@
 .GroceryItem-button-container-right {
     display: flex;
     flex-direction: row;
-    height: 100%;
 }
 
 .GroceryItem-count-container {
@@ -90,9 +93,9 @@
 
 .GroceryItem-quantity-input {
     height: 22px;
-    width: 28px;
+    width: 36px;
     text-align: center;
-    margin: auto 69px auto 0;
+    margin: auto 63px auto 0;
     border: 0.0625em solid rgba(0, 0, 0, 1);
     padding: 0.0625em;
     font-size: 1rem;
@@ -113,4 +116,27 @@
 .GroceryItem-border-bottom {
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.274);
     width: 100%;
+}
+
+@media (max-width: 300px) {
+    .GroceryItem-container-left {
+        min-width: 60px;
+    }
+
+    .GroceryItem-name {
+        font-size: 1rem;
+    }
+    
+    .GroceryItem-name-input {
+        font-size: 1rem;
+    }
+
+    .GroceryItem-count-button {
+        min-height: 28px;
+        width: 28px;
+    }
+
+    .GroceryItem-quantity-input {
+        margin: auto 59px auto 0;
+    }
 }
