@@ -210,7 +210,6 @@ export function Grocery() {
                 onSearchChange={handleSearchChange}
             />
             <div className="Grocery-grocery-item-list">
-                <div className="Grocery-grocery-item-unchecked-list">
                     {sortedGroceryItems
                         .filter((item) => item.checked === false)
                         .map((item) => (
@@ -223,8 +222,7 @@ export function Grocery() {
                                 onClickGroceryCheckbox={toggleGroceryCheck}
                             />
                         ))}
-                </div>
-                <div className="Grocery-grocery-item-checked-list">
+                <div className="Grocery-grocery-item-checked-list-container">
                     <div className="Grocery-checked-header">
                         <div>Checked Items</div>
                         <div
@@ -245,6 +243,7 @@ export function Grocery() {
                         />
                     ))}
                 </div>
+                <div className="Grocery-spacer" />
             </div>
             {addButton}
             {deleteModeButtons}

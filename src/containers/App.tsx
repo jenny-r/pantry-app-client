@@ -13,7 +13,7 @@ function App() {
     const [isSigningIn, setIsSigningIn] = useState(true);
     const accessToken = useAppSelector((state) => state.user.accessToken);
 
-    const tabNames = ['Pantry', 'Groceries', 'Recipes'];
+    const tabNames = ['Pantry', 'Groceries'];
 
     useEffect(() => {
 		if (accessToken === null) {
@@ -38,7 +38,7 @@ function App() {
             tabContent = <h2>Recipes placeholder</h2>;
         }
         content = (
-            <div>
+            <div className="App-main">
                 <Tabs tabNames={tabNames} onTabSelect={setIndex} />
                 <div className="App-content">{tabContent}</div>
             </div>

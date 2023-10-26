@@ -9,16 +9,18 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    height: 70px;
+    padding: 0.6250em 1.2500em;
+    min-height: 70px;
 }
 
 .PantryItem-container-left {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 50%;
+    flex: 1;
     height: 100%;
+    padding-right: 1em;
+    min-width: 80px;
 }
 
 .PantryItem-delete-checkbox-container-left {
@@ -37,30 +39,31 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow-wrap: break-word;
 }
 
 .PantryItem-name {
-    margin: 0px;
-    padding: 0 0 5px 0;
-    font-size: 22px;
+    margin: 0;
+    padding: 0 0 0.3125em 0;
+    font-size: 1.375rem;
     font-weight: 600;
 }
 
 .PantryItem-name-input {
-    margin: 0px;
-    font-size: 22px;
+    flex: 1;
+    margin: 0;
+    font-size: 1.375rem;
     font-weight: 600;
 }
 
 .PantryItem-unit {
-    font-size: 16px;
-    margin: 0px;
+    font-size: 1rem;
+    margin: 0;
 }
 
 .PantryItem-button-container-right {
     display: flex;
     flex-direction: row;
-    height: 100%;
 }
 
 .PantryItem-count-container {
@@ -70,12 +73,8 @@
 }
 
 .PantryItem-count-button {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    height: 32px;
+    font-size: 1.25rem;
+    min-height: 32px;
     width: 32px;
     border: 1px solid rgba(0, 0, 0, 0.274);
     border-radius: 10px;
@@ -93,24 +92,46 @@
 }
 
 .PantryItem-quantity-input {
-    display: inline-block;
     height: 22px;
-    width: 28px;
+    width: 36px;
     text-align: center;
-    margin: auto 69px auto 0;
-    border: 1px solid rgba(0, 0, 0, 1);
-    padding: 1px;
-    font-size: 16px;
+    margin: auto 63px auto 0;
+    border: 0.0625em solid rgba(0, 0, 0, 1);
+    padding: 0.0625em;
+    font-size: 1rem;
 }
 
 .PantryItem-grocery-button {
     border: none;
     background: none;
     padding: 0;
-    margin: 0 0 0 15px;
+    margin: 0 0 0 1em;
 }
 
 .PantryItem-border-bottom {
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.274);
     width: 100%;
+}
+
+@media (max-width: 300px) {
+    .PantryItem-container-left {
+        min-width: 60px;
+    }
+
+    .PantryItem-name {
+        font-size: 1rem;
+    }
+    
+    .PantryItem-name-input {
+        font-size: 1rem;
+    }
+
+    .PantryItem-count-button {
+        min-height: 28px;
+        width: 28px;
+    }
+
+    .PantryItem-quantity-input {
+        margin: auto 59px auto 0;
+    }
 }
