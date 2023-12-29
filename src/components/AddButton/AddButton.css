@@ -6,7 +6,7 @@
     width: 50px;
     height: 50px;
     align-self: center;
-    position: fixed;
+    position: absolute;
     right: 0;
     bottom: 0;
     border: 1px solid rgba(0, 0, 0, 0.274);
@@ -22,7 +22,7 @@
 }
 
 .AddButton-button:active {
-    background: #81a2b1;
+    background: rgb(173, 219, 228);
     transition: all 0.4s;
 }
 

@@ -1,12 +1,10 @@
 .Tabs-tabs-container {
     display: flex;
     flex-direction: row;
-    background: rgba(208, 247, 232, 0.842);
 }
 
 .Tabs-edge {
     width: 40px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.274);
 }
 
 .Tabs-tabs-wrapper {
@@ -17,10 +15,12 @@
 
 .Tabs-tabs {
     flex: 1;
-    padding: 20px 0px;
+    padding: 20px 0px 14px 0px;
     text-align: center;
+    z-index: 0;
     background: rgb(211, 247, 253);
     border: 1px solid rgba(0, 0, 0, 0.274);
+    border-bottom: transparent;
     border-radius: 10px 10px 0px 0px;
     cursor: pointer;
     -webkit-touch-callout: none;
@@ -32,5 +32,26 @@
 
 .Tabs-active-tab {
     background: white;
-    border-bottom: 1px solid transparent;
+}
+
+.Tabs-cover {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    bottom: -80%;
+    z-index: 1;
+    background: transparent;
+}
+
+.Tabs-active-cover {
+    background: white;
+}
+
+@media (max-width: 769px) {
+    .Tabs-tabs {
+        border: 1px solid rgba(0, 0, 0, 0.274);
+    }
+    .Tabs-edge {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+    }
 }
