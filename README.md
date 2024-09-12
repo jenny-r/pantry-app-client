@@ -1,4 +1,10 @@
-# Getting Started with Create React App
+# My Pantry
+
+A React application that tracks your pantry inventory and grocery list.
+
+---
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
